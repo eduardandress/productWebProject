@@ -5,7 +5,6 @@
           <h5 class="white-text">{{$companyInfo->name or 'CompanyName'}}</h5>
           <p class="grey-text text-lighten-4" style="word-wrap: break-word">{{$companyInfo->description or 'Description' }}</p>
 
-
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">{{trans('core::main.navigation') }}</h5>
