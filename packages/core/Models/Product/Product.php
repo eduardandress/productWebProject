@@ -16,5 +16,11 @@ class Product extends Model
 
     protected $currencyAbbr;
 
-    protected $fillable = array('name', 'description', 'price', 'currencyAbbr');
+    protected $mainPictureURL;
+
+    protected $isMain;
+
+    protected $rank;
+
+    protected $fillable = array('name', 'description', 'price', 'currencyAbbr', 'mainPictureURL', 'isMain','rank');
 }

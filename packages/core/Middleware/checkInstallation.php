@@ -1,6 +1,6 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Middleware;
+namespace Core\Middleware;
 
 use Closure;
 use DB;
@@ -16,8 +16,9 @@ class checkInstallation
      */
     public function handle($request, Closure $next)
     {
+
         if(!$this->alreadyInstalled()) {
-            redirect()->route('LaravelInstaller::welcome');
+            return redirect()->route('LaravelInstaller::welcome');
         } 
         
         return $next($request);
