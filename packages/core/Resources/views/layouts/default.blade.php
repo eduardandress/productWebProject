@@ -4,15 +4,16 @@
     @include('core::includes.head')
 </head>
 <body>
+		<header>
+	        @include('core::includes.header')
+	        @include('core::includes.bannersection')
+		</header>
 
-        @include('core::includes.header')
-        @include('core::includes.bannersection')
-
-        <div class="container">
+        <div class="container-fluid">
                 @yield('content')
         </div>
 
         @include('core::includes.footer')
-
+		@yield('scripts')
 </body>
 </html>
