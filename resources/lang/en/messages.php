@@ -54,6 +54,29 @@ return [
         'errors' => 'Unable to save the .env file, Please create it manually.',
     ],
 
+    /**
+     *
+     * Company setup page translations
+     *
+     */
+     'company' => [
+        'title' => 'Setting up your company',
+        'message' => 'Fill out the following form',
+        'name' => 'Name',
+        'description' => 'description',
+        'missionStatement' => 'Mission statement',
+        'visionStatement' => 'Vision statement',
+        'mainLandPhone' => 'Main phone',
+        'mainEmail' => 'Main E-mail',
+        'mainFacebookProfile' => 'Facebook profile link',
+        'mainTwitterProfile' => 'Twitter profile link',
+        'mainInstagramProfile' => 'Instagram profile link',
+        'mainGooglePlusProfile' => 'Google + profile link',
+        'dropLogoMessage' => 'Click and select or drag your company logo.',
+        'removeLogoMessage' => 'Remove',
+        'replaceLogoMessage' => 'Drag and drop or click to replace.',
+        'errorUploadLogo' => 'Something wrong happend.'
+    ],
 
     /**
      *

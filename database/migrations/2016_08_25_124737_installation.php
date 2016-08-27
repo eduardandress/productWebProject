@@ -33,6 +33,8 @@ class Installation extends Migration
             $table->string('mainCity')->nullable();
             $table->string('mainZIPCode')->nullable();
             $table->text('mainAddress')->nullable();
+            $table->string('logoURL')->nullable();
+
 
             $table->timestamps();
         });
@@ -45,6 +47,9 @@ class Installation extends Migration
             $table->text('description')->nullable();
             $table->float('price');
             $table->string('currencyAbbr')->nullable();
+            $table->string('mainPictureURL')->nullable();
+            $table->boolean('isMain')->nullable()->default(true);
+            $table->float('rank')->nullable()->default('0.0');
             
             $table->timestamps();
         });

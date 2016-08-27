@@ -11,5 +11,7 @@ class Company extends Model
 
     protected $description;
 
-    protected $fillable = array('name', 'description','missionStatement', 'visionStatement', 'mainLandPhone', 'mainMobilePhone', 'mainEmail', 'mainFacebookProfile', 'mainTwitterProfile', 'mainGooglePlusProfile', 'mainInstagramProfile', 'mainLinkedInProfile', 'mainCountry', 'mainState', 'mainCity', 'mainZIPCode', 'mainAddress');
+    protected $logoURL;
+
+    protected $fillable = array('name', 'description','missionStatement', 'visionStatement', 'mainLandPhone', 'mainMobilePhone', 'mainEmail', 'mainFacebookProfile', 'mainTwitterProfile', 'mainGooglePlusProfile', 'mainInstagramProfile', 'mainLinkedInProfile', 'mainCountry', 'mainState', 'mainCity', 'mainZIPCode', 'mainAddress', 'logoURL');
 }

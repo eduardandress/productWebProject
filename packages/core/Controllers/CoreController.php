@@ -5,29 +5,45 @@ namespace Core\Controllers;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Core\Repositories\CompanyRepository;
+use Core\Repositories\ProductRepository;
+
  
 class CoreController extends Controller
 {
  
     protected $companyInfo;
 
-    public function __construct(CompanyRepository $companyRepository) {
+    protected $productRepository;
+
+    public function __construct( CompanyRepository $companyRepository, ProductRepository $productRepository) {
+
       $this->companyRepository = $companyRepository;
       $this->companyInfo = $this->companyRepository->first($columns = ['*']);
+
+      $this->productRepository = $productRepository;
     }
     
     /**
     * Landing page
     */
     public function index() {
-        return view('core::pages.home', array('companyInfo' => $this->companyInfo));
+
+        return view('core::pages.home', array(
+                'companyInfo' => $this->companyInfo,
+                'bestProducts' => $this->productRepository->orderBy('rank', 'desc')->paginate(3)
+                )
+        );
     }
     
     /**
      * All products page
      */
     public function products() {
-        return view('core::pages.products', array('companyInfo' => $this->companyInfo));
+        return view('core::pages.products', array(
+                'companyInfo' => $this->companyInfo,
+                'allProducts' => $this->productRepository->all()
+            )
+        );
     }
 
     /**

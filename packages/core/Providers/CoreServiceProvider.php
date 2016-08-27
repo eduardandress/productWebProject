@@ -20,6 +20,8 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadViewsFrom(realpath(__DIR__.'/../Resources/views'), 'core');
 
         $this->loadTranslationsFrom(realpath(__DIR__.'/../Resources/langs'), 'core');
+
+        app('router')->middleware('checkInstallation', '\Core\Middleware\checkInstallation');
     }
 
     /**
@@ -45,7 +47,9 @@ class CoreServiceProvider extends ServiceProvider
     {
         $router->group(['namespace' => 'Core\Controllers', 'as' => 'CoreRoutes::'], function($router)
         {
-            require __DIR__.'/../Config/routes.php';
+            
+                require __DIR__.'/../Config/routes.php';
+        
         });
     }
 

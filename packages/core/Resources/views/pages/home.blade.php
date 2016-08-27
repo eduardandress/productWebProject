@@ -1,6 +1,6 @@
 @extends('core::layouts.default')
 @section('content')
-<?php $primaryColor =  "white"; ?>
+
     <section class="section grey darken-3 white-text center">
           <h2>¡Ya tienes un buen comienzo!</h2>
           <p>Extiende facilmente tu sitio web, anexandole busquedas de tus productos, carrito de compra, formularios de contacto, etc. ¡Gracias a una buena estructura inicial!</p>
