@@ -152,7 +152,7 @@ return [
 
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
-        RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+        // RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
@@ -165,7 +165,9 @@ return [
         /**
          * Core Package Service Provider
          */
-        Core\Providers\CoreServiceProvider::class
+        Core\Providers\CoreServiceProvider::class,
+        Installer\Providers\EJCInstallerServiceProvider::class,
+        
 
     ],
 
@@ -213,6 +215,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'AppHelper' => App\Helpers\AppHelper::class,
 
     ],
 

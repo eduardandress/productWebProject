@@ -1,9 +1,9 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer::layouts.master')
 
 @section('title', trans('messages.company.title'))
 @section('container')
     <p class="paragraph">{{ trans('messages.company.message') }}</p>
-    <form action="{{ route('LaravelInstaller::companySave')}}" enctype="multipart/form-data" method="POST">
+    <form action="{{ route('EJCInstaller::companySave')}}" enctype="multipart/form-data" method="POST">
 
             <div class="input-field"> 
                 <div class="form-group">
