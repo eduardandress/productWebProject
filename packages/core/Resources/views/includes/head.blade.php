@@ -11,3 +11,15 @@
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+
+  <style>
+  	#main-navbar ul a {
+  		color:  inherit;
+  	}
+  	a {
+  		color:  inherit;
+  	}
+  	.button-collapse{
+  		color:  inherit;
+  	}
+  </style>

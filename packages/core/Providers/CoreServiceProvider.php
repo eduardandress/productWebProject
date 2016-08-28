@@ -21,6 +21,10 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->loadTranslationsFrom(realpath(__DIR__.'/../Resources/langs'), 'core');
 
+        $this->publishes([
+                __DIR__.'/../Config/packageConfig.php' => config_path('core/packageConfig.php'),
+        ]);
+
         app('router')->middleware('checkInstallation', '\Core\Middleware\checkInstallation');
     }
 

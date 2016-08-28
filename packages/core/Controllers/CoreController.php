@@ -19,18 +19,20 @@ class CoreController extends Controller
 
       $this->companyRepository = $companyRepository;
       $this->companyInfo = $this->companyRepository->first($columns = ['*']);
-
       $this->productRepository = $productRepository;
+
     }
     
     /**
     * Landing page
     */
     public function index() {
-
+        /* get the template colors to use */
+        $templateColors = config('core.packageConfig.templateColors');
         return view('core::pages.home', array(
                 'companyInfo' => $this->companyInfo,
-                'bestProducts' => $this->productRepository->orderBy('rank', 'desc')->paginate(3)
+                'bestProducts' => $this->productRepository->orderBy('rank', 'desc')->paginate(3),
+                'colors' => $templateColors
                 )
         );
     }

@@ -1,5 +1,5 @@
-<div class="navbar-fixed">
-  <nav class="grey darken-3" role="navigation">
+<div id="main-navbar" class="navbar-fixed">
+  <nav class="{{$colors['secondColorClass'] or '' }}   {{$colors['secondFontColorClass'] or '' }}" role="navigation">
 
     <div class="nav-wrapper container-fliud"><a id="logo-container" href="#" >
     
@@ -14,7 +14,7 @@
         <li><a href="contact">{{trans('core::menu.contactUs')}}</a></li>
       </ul>
 
-      <ul id="nav-mobile" class="side-nav">
+      <ul id="nav-mobile" class="side-nav {{$colors['secondColorClass'] or '' }} ">
         <li><a href="{{ route('CoreRoutes::landing_page') }}">{{trans('core::menu.home')}}</a></li>
         <li><a href="products">{{trans('core::menu.products')}}</a></li>
         <li><a href="about">{{trans('core::menu.aboutUs')}}</a></li>
