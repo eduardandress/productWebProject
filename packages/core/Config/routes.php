@@ -7,4 +7,5 @@ Route::group(['middleware' => 'checkInstallation'], function(){
   Route::get('products', array('uses'=>'CoreController@products') )->name('all_products');
 
   Route::get('contact', array('uses'=>'CoreController@contact') )->name('contact_us');
+
 });

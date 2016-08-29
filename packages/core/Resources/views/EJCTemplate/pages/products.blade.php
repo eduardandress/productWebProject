@@ -1,7 +1,7 @@
-@extends('core::layouts.no-banner')
+@extends('core::EJCTemplate.layouts.no-banner')
 
 @section('sidebar-content')
-    @include('core::includes.productmenu')
+    @include('core::EJCTemplate.includes.productmenu')
 @stop  
 
 @section('content')
@@ -12,8 +12,8 @@
    ======================================-->
 
     <div class="section">
-        <h4 class="center-align">Productos</h4>
-        <p class="center-align">Nuestros productos</p>
+        <h4 class="center-align">{{trans('core::main.products')}}</h4>
+        <p class="center-align">{{trans('core::main.ourProducts')}}</p>
        
         <div class="container-fluid">
             <div class="flex-row">
@@ -25,7 +25,7 @@
                           </div>
                           <div class="card-content">
                             <span class="card-title activator grey-text text-darken-4">{{$product->name}}<i class="material-icons right">more_vert</i></span>
-                            <p><a href="#">VER DETALLE</a></p>
+                            <p><a href="#">{{trans('core::main.linkSeeProductText')}} </a></p>
                           </div>
                           <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">{{$product->name}}<i class="material-icons right">close</i></span>

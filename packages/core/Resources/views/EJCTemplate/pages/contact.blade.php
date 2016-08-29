@@ -1,4 +1,4 @@
-@extends('core::layouts.full-width')
+@extends('core::EJCTemplate.layouts.full-width')
 @section('content')
 
   <div class="container center-align">
@@ -79,7 +79,7 @@
                         <div class="divider"></div>
                         <div class="row">
                             <div class="col m12">
-                             <p class="right-align"><button class="btn btn-large waves-effect waves-light" type="button" name="action">{{trans('core::main.sendMessage')}}</button></p>
+                             <p class="right-align"><button class="btn btn-large waves-effect waves-light {{$demoColors['secondColorClass'] or '' }} {{$demoColors['buttonColorText'] or '' }}" type="button" name="action">{{trans('core::main.sendMessage')}}</button></p>
                             </div>
                         </div>
                     </form>

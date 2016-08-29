@@ -28,6 +28,9 @@ class CoreServiceProvider extends ServiceProvider
         app('router')->middleware('checkInstallation', '\Core\Middleware\checkInstallation');
         $this->mergeConfigFrom(__DIR__.'/../Config/packageInformation.php','installedPackages');
 
+        /* Sharing the demo template colors to the  views */
+        view()->share('demoColors', config('core.packageConfig.templateColors'));
+
     }
 
     /**

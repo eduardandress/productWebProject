@@ -6,13 +6,14 @@
 		'templateColors' => [
 
 			'mainColorClass' =>  'red lighten-1',
-			'secondColorClass' => 'white',
+			'secondColorClass' => 'red darken-3',
 			'thirdColorClass' => 'grey darken-4',
 			'mainFontColorClass' => 'grey-text text-darken-4',
 			'secondFontColorClass' => 'grey-text text-darken-4',
 			'thirdFontColorClass' => 'red-text text-darken-2',
-			'sectionTitleFontColor' => 'grey-text text-lighten-2'
-
+			'sectionTitleFontColor' => 'grey-text text-lighten-4',
+			'buttonColorText' => 'white-text',
+			'navBarColorText' => 'white-text',
 		],
 
 	]

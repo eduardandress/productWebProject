@@ -32,6 +32,11 @@
 header .carousel-slider {
 	height:600px !important;
 }
+
+.carousel-slider h1,.carousel-slider h2 {
+	background-color: rgba(14, 20, 20, 0.35);
+	font-weight: 200;
+}
 .flex-row{
 	display: flex;
 	flex-flow: row wrap;
@@ -71,6 +76,11 @@ header .carousel-slider {
 h2{
 	font-size: 36px;
 }
+
+h5 {
+	font-weight: 300;
+}
+
 /* Best Products */
 .product-item {
 	flex-basis: 300px;
@@ -80,4 +90,10 @@ h2{
 .product-item  .card  .card-title{
 	font-weight: bold;
 	text-shadow: 1px 1px 1px #FFF;
+}
+.section h2 {
+	font-weight: 200;
+}
+.material-scrolltop:hover {
+    background-color: inherit;
 }

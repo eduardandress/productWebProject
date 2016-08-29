@@ -1,4 +1,4 @@
-@extends('core::layouts.full-width')
+@extends('core::EJCTemplate.layouts.full-width')
 @section('content')
   <div class="container">
       <h1 class="center-align">{{trans('core::main.ourCompany')}}</h1>

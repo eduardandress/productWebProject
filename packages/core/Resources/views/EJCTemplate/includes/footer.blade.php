@@ -1,4 +1,4 @@
-  <footer class="page-footer {{$colors['thirdColorClass'] or '' }} grey-text text-lighten-1">
+  <footer class="page-footer {{$demoColors['thirdColorClass'] or '' }} grey-text text-lighten-1">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
@@ -45,6 +45,7 @@
       Made by <a class="orange-text text-lighten-3" href="#!">E&JC</a>
       </div>
     </div>
+    <button class="material-scrolltop {{$demoColors['mainColorClass']}}" type="button"></button>
   </footer>
 
 
@@ -52,6 +53,8 @@
   <script src="{{URL::asset('assets/js/jquery-3.1.0.min.js')}}"></script>
 
   <script src="{{URL::asset('assets/js/materialize.js')}}"></script>
+  <script src="{{URL::asset('assets/mScrollTop/material-scrolltop.js')}}"></script>
+
   <script src="{{URL::asset('assets/js/init.js')}}"></script>
 
 

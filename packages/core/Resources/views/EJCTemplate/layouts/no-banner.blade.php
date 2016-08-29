@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('core::includes.head')
+    @include('core::EJCTemplate.includes.head')
 </head>
 <body>
-
-        @include('core::includes.header')
-
-        @include('core::includes.breadcrumb')
+        @include('core::EJCTemplate.includes.header')
+        @include('core::EJCTemplate.includes.breadcrumb')
 
         <div class="row">
 
@@ -19,7 +17,7 @@
                     @yield('content')
                 </div>
         </div>
-        @include('core::includes.footer')
+        @include('core::EJCTemplate.includes.footer')
 
 </body>
 </html>

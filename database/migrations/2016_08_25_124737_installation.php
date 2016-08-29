@@ -75,5 +75,7 @@ class Installation extends Migration
     {
         Schema::drop('company');
         Schema::drop('product');
+        Schema::drop('client');
+
     }
 }
