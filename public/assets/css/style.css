@@ -3,9 +3,26 @@
  * Use this file to override Materialize files so you can update
  * the core Materialize files in the future
  *
- * Made By MaterializeCSS.com
+ * 
  */
 
+/* Logo  */
+#logo-container{
+	margin-left: 5px;
+    display: flex;
+    align-items: center;
+}
+#logo-container > img{
+	max-height: 64px;
+	max-width:  100px;
+	margin-right: 10px;
+}
+.compName{
+	text-align: left;
+	color: black;
+	font-size: 20px;
+	text-transform: uppercase;
+}
 .icon-block {
   padding: 0 15px;
 }
@@ -13,16 +30,16 @@
 	font-size: inherit;
 }
 header .carousel-slider {
-height:600px !important;}
-
+	height:600px !important;
+}
 .flex-row{
 	display: flex;
 	flex-flow: row wrap;
+	justify-content: center;
 }
 .flex-col{
 	flex-grow: 1;
 	flex-shrink: 1;
-
 }
 /* Carousel Demo Backgrounds */
 .demoBgn{
@@ -43,12 +60,24 @@ height:600px !important;}
 .demoback4{
 	background-image: url(../images/main-carousel/demoImg4.jpg);
 }
-
 /* Clients Carousel */
 #owl-clients .item{
 	padding: 10px;
 }
-
+#owl-clients .item .card  img{
+	height: 100px;
+	margin-top: 2px;
+}
 h2{
 	font-size: 36px;
+}
+/* Best Products */
+.product-item {
+	flex-basis: 300px;
+	max-width: 300px;
+	margin: 5px;
+}
+.product-item  .card  .card-title{
+	font-weight: bold;
+	text-shadow: 1px 1px 1px #FFF;
 }

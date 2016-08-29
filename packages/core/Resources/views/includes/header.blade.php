@@ -4,7 +4,8 @@
     <div class="nav-wrapper container-fliud"><a id="logo-container" href="#" >
     
     <a id="logo-container" href="#" class="brand-logo">
-        <img class="img-responsive" height="64px" src="{{URL::asset($companyInfo->logoURL)}}">
+        <img class="img-responsive" src="{{URL::asset($companyInfo->logoURL)}}">
+        <span class="compName"> {{$companyInfo->name or 'CompanyName'}} </span>
     </a>
 
       <ul class="right hide-on-med-and-down">

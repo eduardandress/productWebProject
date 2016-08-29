@@ -35,7 +35,6 @@ class Installation extends Migration
             $table->text('mainAddress')->nullable();
             $table->string('logoURL')->nullable();
 
-
             $table->timestamps();
         });
 
@@ -50,10 +49,21 @@ class Installation extends Migration
             $table->string('mainPictureURL')->nullable();
             $table->boolean('isMain')->nullable()->default(true);
             $table->float('rank')->nullable()->default('0.0');
-            
+
             $table->timestamps();
         });
        
+        /*----------  Client Table  ----------*/
+        
+        Schema::create('client', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('mainPictureURL')->nullable();
+            
+            $table->timestamps();
+        });
+
     }
 
     /**
