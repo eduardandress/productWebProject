@@ -1,4 +1,4 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer::layouts.master')
 
 @section('title', trans('messages.final.title'))
 @section('container')

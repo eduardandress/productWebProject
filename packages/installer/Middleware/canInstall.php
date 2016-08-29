@@ -1,11 +1,11 @@
 <?php
 
-namespace Core\Middleware;
+namespace Installer\Middleware;
 
 use Closure;
 use DB;
 
-class checkInstallation
+class canInstall
 {
     /**
      * Handle an incoming request.
@@ -14,11 +14,11 @@ class checkInstallation
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next )
+    public function handle($request, Closure $next)
     {
-        if(\AppHelper::isPackageInstalled('Installer') && !$this->alreadyInstalled()) {
-            return redirect()->route('EJCInstaller::welcome');
-        } 
+        if($this->alreadyInstalled()) {
+            abort(404);
+        }
         
         return $next($request);
     }
@@ -32,6 +32,4 @@ class checkInstallation
     {
         return file_exists(storage_path('installed'));
     }
-
-    
 }

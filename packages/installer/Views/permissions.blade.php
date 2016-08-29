@@ -1,4 +1,4 @@
-@extends('vendor.installer.layouts.master')
+@extends('installer::layouts.master')
 
 @section('title', trans('messages.permissions.title'))
 @section('container')
@@ -13,7 +13,7 @@
 
 @if(!isset($permissions['errors']))
 <div class="buttons">
-    <a class="button" href="{{ route('LaravelInstaller::database') }}">
+    <a class="button" href="{{ route('EJCInstaller::database') }}">
         {{ trans('messages.next') }}
     </a>
 </div>
