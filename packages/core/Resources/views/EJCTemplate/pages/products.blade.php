@@ -45,7 +45,7 @@
                           </div>
                           <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">{{$product->name}}<i class="material-icons right">close</i></span>
-                            <p>{!!html_entity_decode($product->description)!!}</p>
+                            <p style="word-wrap: break-word">{!!html_entity_decode($product->description)!!}</p>
                           </div>
                         </div>
                     </div>
