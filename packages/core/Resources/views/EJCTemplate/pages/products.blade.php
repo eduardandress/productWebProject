@@ -19,7 +19,7 @@
             <div class="flex-row">
                  @foreach ($allProducts as $product)
                     <div class="flex-item product-item">
-                        <div class="card">
+                        <div class="card" >
                           <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator responsive-img"  src="{{URL::asset($product->mainPictureURL)}}">
                           </div>
@@ -43,9 +43,9 @@
                             </div>
                             <p class="right-align"><a href="#">{{trans('core::main.linkSeeProductText')}} </a></p>
                           </div>
-                          <div class="card-reveal">
+                          <div class="card-reveal" style="overflow-y:hidden">
                             <span class="card-title grey-text text-darken-4">{{$product->name}}<i class="material-icons right">close</i></span>
-                            <p style="word-wrap: break-word">{!!html_entity_decode($product->description)!!}</p>
+                            <p class="description-container" style="word-wrap: break-word; height: calc(100% - 100px); overflow-y: auto; ">{!!html_entity_decode($product->description)!!}</p>
                           </div>
                         </div>
                     </div>
@@ -62,8 +62,11 @@
   
 @stop
 @section('scripts')
+
   <script src="{{URL::asset('assets/jqueryBarRating/jquery.barrating.min.js')}}"></script>
-  
+  <script src="{{URL::asset('assets/perfectscrollbar/perfect-scrollbar.jquery.min.js')}}"></script>
+  <link rel="stylesheet" href="{{URL::asset('assets/perfectscrollbar/perfect-scrollbar.min.css')}}">
+
   <script type="text/javascript">
     (function($){
       $(function(){
@@ -72,7 +75,7 @@
               theme: 'css-stars',
               showSelectedRating: false
           });
-           
+          $('.product-item .description-container').perfectScrollbar();           
       }); 
     })(jQuery); 
   </script>

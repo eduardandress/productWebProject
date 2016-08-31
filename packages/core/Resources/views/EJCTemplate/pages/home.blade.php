@@ -79,21 +79,20 @@
       <div class="owl-carousel" id="owl-clients">
           @foreach ($clients as $client)
             <div class="item"> 
-                  <div class="card small">
-                    <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" src="{{URL::asset($client->mainPictureURL)}}">
-                    </div>
-                    <div class="card-content">
-                      <span class="card-title activator grey-text text-darken-4">{{$client->name}}<i class="material-icons right">more_vert</i></span>
-                      
-                    </div>
-                    <div class="card-reveal">
-                      <span class="card-title grey-text text-darken-4">{{$client->name}}<i class="material-icons right">close</i></span>
-                      <p>{{$client->description}}</p>
-                    </div>
-                  </div>
+                <img title="{{$client->name}}"  src="{{URL::asset($client->mainPictureURL)}}">
             </div>
           @endforeach
+           <!-- Just fill some aditional items -->
+          @if( count($clients) < 5)
+             
+             @for ($i = count($clients) + 1; $i <= count($clients) + 3; $i++)
+               <div class="item"> 
+                   <img title="Client_{{$i}}"  src="{{URL::asset('assets/images/client.png')}}">
+               </div>
+             @endfor
+
+          @endif
+
       </div>
     </div>
   </section>

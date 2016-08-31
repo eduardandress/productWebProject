@@ -67,13 +67,17 @@ header .carousel-slider {
 	background-image: url(../images/main-carousel/demoImg4.jpg);
 }
 /* Clients Carousel */
+#owl-clients {
+	display: flex !important;
+}
 #owl-clients .item{
 	padding: 10px;
 }
-#owl-clients .item .card  img{
+#owl-clients .item img{
 	height: 100px;
-	margin-top: 2px;
+	width: 150px;
 }
+
 h2{
 	font-size: 36px;
 }
