@@ -106,19 +106,19 @@
       <h2 class="center {{$demoColors['mainFontColorClass'] or '' }}">{{trans('core::main.section6Message1')}}</h2>
       <div class="container">
         <div class="flex-row {{$demoColors['thirdFontColorClass'] or '' }} ">
-            @if(isset($companyInfo->mainFacebookProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile))
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainFacebookProfile}}"><i class="fa fa-facebook-square fa-5x"></i> Facebook</a></i></div>
             @endif
-            @if(isset($companyInfo->mainTwitterProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile))
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainTwitterProfile}}"><i class="fa fa-twitter-square fa-5x"></i> Twitter</a></div>
             @endif
-            @if(isset($companyInfo->mainInstagramProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile))
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainInstagramProfile}}"><i class="fa fa-instagram fa-5x"></i> Instagram</a></div>
             @endif
-            @if(isset($companyInfo->mainGooglePlusProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile))
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainGooglePlusProfile}}"><i class="fa fa-google-plus-official fa-5x"></i> Google +</a></div>
             @endif
-            @if(isset($companyInfo->mainLinkedInProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile))
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainLinkedInProfile}}"><i class="fa fa-linkedin-square fa-5x"></i> LinkedIn</a></div>
             @endif
         </div>
@@ -129,7 +129,6 @@
 @section('scripts')
     <link rel="stylesheet" href="{{URL::asset('assets/js/owlCarousel/owl.carousel.css')}}">
     <script src="{{URL::asset('assets/js/owlCarousel/owl.carousel.min.js')}}"></script>
-
     <script>
       var homeAPI = (function($){
         var initClientsCarousel = function(){

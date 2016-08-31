@@ -53,6 +53,9 @@ return [
   'ourProducts' => 'Our products',
   'menuProductCardMessage1' => 'Look for products by category.',
   'category' => 'Category',
-  'linkSeeProductText' => 'CHECK IT OUT'
+  'linkSeeProductText' => 'CHECK IT OUT',
+  'companyName' => 'Company Name',
+  'companyDescription' => 'Company description.'
+
 
 ];

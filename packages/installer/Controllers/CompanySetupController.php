@@ -30,7 +30,7 @@ class CompanySetupController extends Controller
 
       if (Input::hasFile('logo')) {
             $logo = Input::file('logo');
-            $shortURL ='CompanyLogo/';
+            $shortURL ='assets/images/CompanyLogo/';
             $destinationPath = public_path().'/'.$shortURL ;
             $filename ='companyLogo.'.$logo->getClientOriginalExtension();
             $logo->move($destinationPath, $filename);

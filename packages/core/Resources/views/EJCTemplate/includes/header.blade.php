@@ -1,11 +1,12 @@
 <div id="main-navbar" class="navbar-fixed">
-  <nav class="{{$demoColors['secondColorClass'] or '' }}   {{$demoColors['navBarColorText'] or '' }}" role="navigation">
+  <nav class="{{$demoColors['secondColorClass'] or '' }} {{$demoColors['navBarColorText'] or '' }}" role="navigation">
 
-    <div class="nav-wrapper container-fliud"><a id="logo-container" href="#" >
-    
+    <div class="nav-wrapper container-fluid">
+
+
     <a id="logo-container" href="#" class="brand-logo">
-        <img width="100px" height="64px" class="img-responsive" src="{{URL::asset($companyInfo->logoURL)}}">
-        <span class="compName {{$demoColors['navBarColorText'] or '' }}"> {{$companyInfo->name or 'CompanyName'}} </span>
+        <img height="64px" class="img-responsive" src="@if(!is_null($companyInfo)) {{URL::asset($companyInfo->logoURL)}} @else {{URL::asset('assets/images/company.svg')}} @endif">
+        <span class="compName {{$demoColors['navBarColorText'] or '' }}">@if(!is_null($companyInfo)) {{$companyInfo->name or 'CompanyName'}}  @endif </span>
     </a>
 
       <ul class="right hide-on-med-and-down">

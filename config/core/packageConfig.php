@@ -5,15 +5,15 @@
 		/* This is just a demo */
 		'templateColors' => [
 
-			'mainColorClass' =>  'red lighten-1',
-			'secondColorClass' => 'red darken-3',
+			'mainColorClass' =>  'blue lighten-1',
+			'secondColorClass' => 'white',
 			'thirdColorClass' => 'grey darken-4',
 			'mainFontColorClass' => 'grey-text text-darken-4',
 			'secondFontColorClass' => 'grey-text text-darken-4',
-			'thirdFontColorClass' => 'red-text text-darken-2',
+			'thirdFontColorClass' => 'blue-text text-darken-2',
 			'sectionTitleFontColor' => 'grey-text text-lighten-4',
-			'buttonColorText' => 'white-text',
-			'navBarColorText' => 'white-text',
+			'buttonColorText' => 'grey-text text-darken-4',
+			'navBarColorText' => 'grey-text text-darken-4',
 		],
 
 	]

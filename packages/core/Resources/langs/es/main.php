@@ -53,7 +53,9 @@ return [
   'ourProducts' => 'Nuestros productos',
   'menuProductCardMessage1' => 'Busca productos por categoría.',
   'category' => 'Categoría',
-  'linkSeeProductText' => 'VER DETALLE'
+  'linkSeeProductText' => 'VER DETALLE',
+  'companyName' => ' Nombre de la empresa',
+  'companyDescription' => 'Descripción de la empresa.'
 
 
 ];

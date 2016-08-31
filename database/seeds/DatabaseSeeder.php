@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         //     'mainCity' => '',
         //     'mainZIPCode' => '',
         //     'mainAddress' => '',
-        //     'logoURL' =>''
+        //     'logoURL' =>'assets/images/CompanyLogo/'.''
         // ]);
 
         // DB::table('product')->insert([

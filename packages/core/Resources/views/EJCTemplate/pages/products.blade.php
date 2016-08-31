@@ -24,12 +24,28 @@
                             <img class="activator responsive-img"  src="{{URL::asset($product->mainPictureURL)}}">
                           </div>
                           <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">{{$product->name}}<i class="material-icons right">more_vert</i></span>
-                            <p><a href="#">{{trans('core::main.linkSeeProductText')}} </a></p>
+                            <span class="card-title activator grey-text text-darken-4 truncate">{{$product->name}}<i class="material-icons right">more_vert</i>
+                            </span>
+
+                            <div class="left-align">
+                                @if ($product->price > 0) 
+                                    <h5>{{$product->price}} {{$product->currencyAbbr}}</h5>
+                                @endif  
+                                <span class="stars">
+                                      <select  name="rating" class="rating">
+                                              <option value="1">1</option>
+                                              <option value="2">2</option>
+                                              <option value="3">3</option>
+                                              <option value="4">4</option>
+                                              <option value="5">5</option>
+                                      </select>
+                                </span>
+                            </div>
+                            <p class="right-align"><a href="#">{{trans('core::main.linkSeeProductText')}} </a></p>
                           </div>
                           <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">{{$product->name}}<i class="material-icons right">close</i></span>
-                            <p>{{$product->description}}</p>
+                            <p>{!!html_entity_decode($product->description)!!}</p>
                           </div>
                         </div>
                     </div>
@@ -39,8 +55,25 @@
         </div>
         
     </div>
+   
+
+          
     <!--====  End of Section 1  ====-->
   
- 
-    
+@stop
+@section('scripts')
+  <script src="{{URL::asset('assets/jqueryBarRating/jquery.barrating.min.js')}}"></script>
+  
+  <script type="text/javascript">
+    (function($){
+      $(function(){
+
+          $('.rating').barrating({
+              theme: 'css-stars',
+              showSelectedRating: false
+          });
+           
+      }); 
+    })(jQuery); 
+  </script>
 @stop

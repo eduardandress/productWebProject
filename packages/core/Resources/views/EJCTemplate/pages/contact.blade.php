@@ -115,7 +115,9 @@
           </span>
         </div>
       </section>
-
+    
+      </br>
+      <div class="divider"></div>
       <!-- Map -->
       <section>
         <h5>{{trans('core::main.locateUsOnMap')}}</h5>

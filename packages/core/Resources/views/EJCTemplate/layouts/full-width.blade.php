@@ -12,6 +12,7 @@
            @yield('content')
       </div>
       @include('core::EJCTemplate.includes.footer')
-
+      @yield('scripts')
+      
 </body>
 </html>

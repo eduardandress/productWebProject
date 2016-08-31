@@ -2,8 +2,8 @@
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 >{{$companyInfo->name or 'CompanyName'}}</h5>
-          <p  style="word-wrap: break-word">{{$companyInfo->description or 'Description' }}</p>
+          <h5 >@if(!is_null($companyInfo)){{$companyInfo->name or 'CompanyName'}} @else {{trans('core::main.companyName')}} @endif</h5>
+          <p id="descriptionCompany" style="word-wrap: break-word">@if(!is_null($companyInfo)){{$companyInfo->description or 'Description' }} @else {{trans('core::main.companyDescription')}} @endif</p>
 
         </div>
         <div class="col l3 s12">
@@ -18,22 +18,22 @@
         <div class="col l3 s12">
           <h5 >{{trans('core::main.connectWithUs')}}</h5>
           <ul>
-          @if(isset($companyInfo->mainFacebookProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile))
             <li> <a  target="_blank" href="{{$companyInfo->mainFacebookProfile}}"><i class="fa fa-facebook-square"></i> Facebook</a></li>
           @endif
-          @if(isset($companyInfo->mainTwitterProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainTwitterProfile}}"><i class="fa fa-twitter-square"></i> Twitter</a></li>
           @endif
-          @if(isset($companyInfo->mainInstagramProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainInstagramProfile}}"><i class="fa fa-instagram"></i> Instagram</a></li>
           @endif
-          @if(isset($companyInfo->mainGooglePlusProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainGooglePlusProfile}}"><i class="fa fa-google-plus-official"></i> Google +</a></li>
           @endif
-          @if(isset($companyInfo->mainLinkedInProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainLinkedInProfile}}"><i class="fa fa-linkedin-square"></i> LinkedIn</a></li>
           @endif
-          @if(isset($companyInfo->mainEmail))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainEmail))
             <li><a  href="#!"><i class="fa fa-envelope"></i> {{$companyInfo->mainEmail}}</a></li>
           @endif
           </ul>
@@ -56,5 +56,10 @@
   <script src="{{URL::asset('assets/mScrollTop/material-scrolltop.js')}}"></script>
 
   <script src="{{URL::asset('assets/js/init.js')}}"></script>
+  <script src="{{URL::asset('assets/js/readmore.js')}}"></script>
+
+
+
+
 
 
