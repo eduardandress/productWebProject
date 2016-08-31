@@ -49,7 +49,7 @@
             <div class="flex-item product-item">
               <div class="card ">
                 <div class="card-image">
-                  <img src="{{URL::asset($product->mainPictureURL)}}">
+                  <img src="{{URL::asset($product->mainPictureURL) }}">
                   <span class="card-title {{$demoColors['thirdFontColorClass'] or '' }}">{{ $product->name }}</span>
                 </div>
              <!--    <div class="card-content">
