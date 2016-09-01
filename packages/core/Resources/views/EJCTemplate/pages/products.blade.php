@@ -66,17 +66,11 @@
   <script src="{{URL::asset('assets/jqueryBarRating/jquery.barrating.min.js')}}"></script>
   <script src="{{URL::asset('assets/perfectscrollbar/perfect-scrollbar.jquery.min.js')}}"></script>
   <link rel="stylesheet" href="{{URL::asset('assets/perfectscrollbar/perfect-scrollbar.min.css')}}">
+  <script src="{{URL::asset('assets/js/products.js')}}"></script>
 
   <script type="text/javascript">
-    (function($){
-      $(function(){
-
-          $('.rating').barrating({
-              theme: 'css-stars',
-              showSelectedRating: false
-          });
-          $('.product-item .description-container').perfectScrollbar();           
+     $(document).ready(function() {
+        productsAPI.init();
       }); 
-    })(jQuery); 
   </script>
 @stop
