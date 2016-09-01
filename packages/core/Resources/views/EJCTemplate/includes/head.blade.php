@@ -12,7 +12,6 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 <link href="{{URL::asset('assets/mScrollTop/material-scrolltop.css')}}" type="text/css" rel="stylesheet" />
-<link rel="stylesheet" href="{{URL::asset('assets/jqueryBarRating/themes/css-stars.css')}}">
 
   <style>
   	#main-navbar ul a {

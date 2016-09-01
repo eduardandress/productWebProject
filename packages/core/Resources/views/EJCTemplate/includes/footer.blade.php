@@ -52,8 +52,6 @@
   <script src="{{URL::asset('assets/js/materialize.js')}}"></script>
   <script src="{{URL::asset('assets/mScrollTop/material-scrolltop.js')}}"></script>
   <script src="{{URL::asset('assets/js/init.js')}}"></script>
-  <script src="{{URL::asset('assets/js/readmore.js')}}"></script>
-
 
 
 

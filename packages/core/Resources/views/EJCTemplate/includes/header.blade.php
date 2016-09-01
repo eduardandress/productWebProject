@@ -4,7 +4,7 @@
     <div class="nav-wrapper container-fluid">
 
 
-      <a id="logo-container" href="#" class="brand-logo">
+      <a id="logo-container" href="/" class="brand-logo">
           <img height="64px" class="img-responsive" src="@if(!is_null($companyInfo)) {{URL::asset($companyInfo->logoURL)}} @else {{URL::asset('assets/images/company.svg')}} @endif">
           <span class="compName {{$demoColors['navBarColorText'] or '' }}">@if(!is_null($companyInfo)) {{$companyInfo->name or 'CompanyName'}}  @endif </span>
       </a>
