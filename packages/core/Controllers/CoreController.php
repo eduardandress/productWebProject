@@ -36,17 +36,6 @@ class CoreController extends Controller
                 )
         );
     }
-    
-    /**
-     * All products page
-     */
-    public function products() {
-        return view('core::EJCTemplate.pages.products', array(
-                'companyInfo' => $this->companyInfo,
-                'allProducts' => $this->productRepository->all(),
-            )
-        );
-    }
 
     /**
      * About us page
@@ -55,10 +44,4 @@ class CoreController extends Controller
         return view('core::EJCTemplate.pages.about', array('companyInfo' => $this->companyInfo));
     }
 
-    /**
-     * Contact us page
-     */
-    public function contact() {
-        return view('core::EJCTemplate.pages.contact', array('companyInfo' => $this->companyInfo));
-    }
 }

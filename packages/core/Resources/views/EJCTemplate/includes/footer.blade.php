@@ -10,9 +10,7 @@
           <h5 >{{trans('core::main.navigation') }}</h5>
           <ul>
             <li><a  href="{{ route('CoreRoutes::landing_page') }}">{{trans('core::menu.home')}}</a></li>
-            <li><a  href="products">{{trans('core::menu.products')}}</a></li>
             <li><a  href="about">{{trans('core::menu.aboutUs')}}</a></li>
-            <li><a  href="contact">{{trans('core::menu.contactUs')}}</a></li>
           </ul>
         </div>
         <div class="col l3 s12">
