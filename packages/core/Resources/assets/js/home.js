@@ -1,5 +1,5 @@
 //The home Page js module
-export default homeAPI = (function($){
+var homeAPI = (function($){
 
 	var initClientsCarousel = function(){
 		$("#owl-clients").owlCarousel({
