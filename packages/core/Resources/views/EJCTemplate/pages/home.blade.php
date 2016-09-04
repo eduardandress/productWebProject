@@ -48,14 +48,18 @@
           @foreach ($bestProducts as $product)
             <div class="flex-item product-item">
               <div class="card ">
-                <div class="card-image">
-                  <img src="{{URL::asset($product->mainPictureURL) }}">
-                  <span class="card-title {{$demoColors['thirdFontColorClass'] or '' }}">{{ $product->name }}</span>
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator responsive-img" src="{{URL::asset($product->mainPictureURL) }}">
+                  <span class="card-title activator {{$demoColors['thirdFontColorClass'] or '' }}">{{ $product->name }}</span>
                 </div>
              <!--    <div class="card-content">
            </div> -->
-               <div class="card-action ">
-                <a class="{{$demoColors['secondFontColorClass'] or '' }}" href="#">{{trans('core::main.section3DetailMessage')}}</a>
+                <div class="card-action card-content ">
+                  <a class="{{$demoColors['secondFontColorClass'] or '' }}" href="#">{{trans('core::main.section3DetailMessage')}}</a>
+                </div>
+                <div class="card-reveal" style="overflow-y:hidden">
+                  <span class="card-title grey-text text-darken-4">{{$product->name}}<i class="material-icons right">close</i></span>
+                  <p class="description-container" style="word-wrap: break-word; height: calc(100% - 100px); overflow-y: auto; ">{!!html_entity_decode($product->description)!!}</p>
                 </div>
               </div>
             </div>
