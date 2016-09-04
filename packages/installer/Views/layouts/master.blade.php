@@ -18,8 +18,6 @@
 
     <script src="{{URL::asset('assets/js/materialize.js')}}"></script>
     <script src="{{URL::asset('assets/dropify/js/dropify.min.js')}}"></script>
-
-
   </head>
   <body>
     <div class="master">
