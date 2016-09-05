@@ -95,6 +95,7 @@ h5 {
 .product-item  .card  .card-title{
 	font-weight: bold;
 	text-shadow: 1px 1px 1px #FFF;
+	word-break: break-word;
 }
 .section h2 {
 	font-weight: 200;
