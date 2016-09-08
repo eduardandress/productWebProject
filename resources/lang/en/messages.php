@@ -88,4 +88,19 @@ return [
         'finished' => 'Application has been successfully installed.',
         'exit' => 'Click here to exit',
     ],
+
+     /**
+     *
+     * Products translation
+     *
+     */
+     'product' => [
+        'addProduct' => 'Add product',
+        'productName' =>  'Name',
+        'productDescription' => 'Description',
+        'productCurrency' => 'Currency',
+        'loadImage' => 'Load'
+     ],
+
+
 ];

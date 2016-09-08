@@ -18,9 +18,15 @@
 
     <script src="{{URL::asset('assets/js/materialize.js')}}"></script>
     <script src="{{URL::asset('assets/dropify/js/dropify.min.js')}}"></script>
+
+    <script src="{{URL::asset('installer/js/babel.min.js')}}"></script>
+    <script type="text/babel" src="{{URL::asset('installer/js/installer.js')}}"></script>
+
+
+
   </head>
   <body>
-    <div class="master">
+   <!--  <div class="master">
       <div class="col s6">
         <div class="box">
           <div class="header">
@@ -46,6 +52,414 @@
           </div>
         </div>
       </div>  
+    </div> -->
+
+     <div class="master">
+      <div class="col s6">
+        <div class="box">
+          <div class="header">
+              <h1 class="header__title">@yield('title')</h1>
+          </div>
+          <div id="installerFormWizard" class="formWizard">
+            
+              <ul class="step">
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon database"></i></li>
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon  fa-building"></i></li>
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon permissions"></i></li>
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon requirements"></i></li>
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon update"></i></li>
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon welcome"></i></li>
+                <li class="step__divider"></li>
+              </ul>
+              <div id="main" class="main stepsContainer">
+                    
+
+              </div>
+
+          </div>
+        </div>
+      </div>  
     </div>
+    <div id="productModal" class="modal">
+      <div class="modal-content">
+        <h4>{{ trans('messages.product.addProduct') }}</h4>
+
+
+        <div data-id="${this.id}" class="${ProductComp.viewClassName} card-panel grey lighten-5  ">
+            <div class="row">
+                <div class="col s8">
+                    <div class="row">
+                      <div class="col s12">
+                         <div class="input-field">
+
+                            <input placeholder="max 100 caracteres"  type="text" value="${this.name}" class="validate" id="nombre">
+                            <label for="nombre" >{{trans('messages.product.productName') }}</label>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col s12">
+                        <div class="input-field">
+                          <textarea id="descripcion"
+                            values="${this.description}" class="materialize-textarea">
+                          </textarea>
+                                 <label for="descripcion" >{{ trans('messages.product.productDescription') }}</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                         <div class="input-field col s6">
+                            <input placeholder="max 100 caracteres"  type="text" value="${this.price}" class="validate" id="precio">
+                              <label for="precio" >Precio</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input placeholder="max 100 caracteres" value="${this.currencyAbbr}" type="text" class="validate" id="moneda">
+                                  <label for="moneda">{{ trans('messages.product.currency') }}</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col s4">
+                  <div class="image_view_loader_container">
+                        <img class="img_view grey lighten-2" src="" alt="" />
+                      <div class="file-field input-field">
+                          <div class="btn">
+                            <span>{{ trans('messages.product.loadImage') }}</span>
+                            <input class="image_view_input_file" type="file">
+                          </div>
+                          <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                          </div>
+                       </div>
+                  </div>
+
+                </div>
+            </div>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+      </div>
+    </div>
+
+    <div id="testP">
+    </div>
+
   </body>
+
+
+
+
+  <script type="text/babel">
+   
+      let Steps = [
+      {
+
+        props: {
+            id: "#step1",
+            title: "{{ trans('messages.welcome.title') }}",
+            iconClass: ".welcome",
+            isInitialStep: true,
+            isFinalStep: false,
+            template: ` <p class="paragraph">{{ trans('messages.welcome.message') }}</p>
+              <div class="buttons">
+                  <a class="button nextStep">{{ trans('messages.next') }}</a>
+              </div>`
+        },
+        beforeNextStep(container){
+    
+        }
+
+      },
+      {
+
+        props: {
+            id: "#step2",
+            title: "{{ trans('messages.environment.title') }}",
+            iconClass: ".update",
+            isInitialStep: true,
+            isFinalStep: false,
+            template: `
+               @if (session('message'))
+                  <p class="alert">{{ session('message') }}</p>
+                  @endif
+                  <form method="post" action="{{ route('EJCInstaller::environmentSave') }}">
+                      <textarea class="textarea" name="envConfig">{{ $envConfig }}</textarea>
+                      {!! csrf_field() !!}
+                      <div class="buttons buttons--right">
+                           <button class="button button--light" type="submit">{{ trans('messages.environment.save') }}</button>
+                      </div>
+                  </form>
+                  @if(!isset($environment['errors']))
+                  <div class="buttons">
+                      <a class="button nextStep" href="#">
+                          {{ trans('messages.next') }}
+                      </a>
+                  </div>
+                  @endif
+            `,
+        },
+        beforeNextStep(container){
+
+        }
+
+      },
+      {
+
+        props: {
+            id: "#step3",
+            title: "{{ trans('messages.requirements.title') }}",
+            iconClass: ".requirements",
+            isInitialStep: false,
+            isFinalStep: false,
+            template: `
+               
+                <ul class="list">
+                    @foreach($requirements['requirements'] as $extention => $enabled)
+                    <li class="list__item @if($enabled) success @else error @endif">{{ $extention }}</li>
+                    @endforeach
+                </ul>
+
+                @if(!isset($requirements['errors']))
+                    <div class="buttons">
+                        <a class="button nextStep" href="#">
+                        {{ trans('messages.next') }}
+                        </a>
+                    </div>
+                @endif
+            `,
+        },
+        beforeNextStep(container){
+
+        }
+
+      },
+       {
+
+        props: {
+            id: "#step4",
+            title: "{{ trans('messages.permissions.title') }}",
+            iconClass: ".permissions",
+            isInitialStep: false,
+            isFinalStep: false,
+            template: `
+
+                <ul class="list">
+                    @foreach($permissions['permissions'] as $permission)
+                    <li class="list__item list__item--permissions @if($permission['isSet']) success @else error @endif">
+                        {{ $permission['folder'] }}<span>{{ $permission['permission'] }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+
+                @if(!isset($permissions['errors']))
+                <div class="buttons">
+                    <a class="button nextStep">
+                        {{ trans('messages.next') }}
+                    </a>
+                </div>
+                @endif
+            `,
+        },
+        beforeNextStep(container){
+
+        }
+
+      },
+      {
+
+        props: {
+            id: "#step5",
+            title: "{{ trans('messages.requirements.title') }}",
+            iconClass: ".fa-building",
+            isInitialStep: false,
+            isFinalStep: false,
+            template: `
+               
+                <ul class="list">
+                    @foreach($requirements['requirements'] as $extention => $enabled)
+                    <li class="list__item @if($enabled) success @else error @endif">{{ $extention }}</li>
+                    @endforeach
+                </ul>
+
+                @if(!isset($requirements['errors']))
+                    <div class="buttons">
+                        <a class="button nextStep" href="#">
+                        {{ trans('messages.next') }}
+                        </a>
+                    </div>
+                @endif
+            `,
+        },
+        beforeNextStep(container){
+
+        }
+
+      },
+       {
+
+        props: {
+            id: "#step6",
+            title: "{{ trans('messages.company.title') }}",
+            iconClass: ".database",
+            isInitialStep: false,
+            isFinalStep: true,
+            template: `
+           
+                <p class="paragraph">{{ trans('messages.company.message') }}</p>
+                      <div class="input-field"> 
+                          <div class="form-group">
+                              <span class="help-block"></span>
+                              <input type="text" class="form-control" id="name" name="name" >
+                              <label class="control-label" for="name">{{ trans('messages.company.name') }}</label>
+                          </div>
+                      </div>
+                      <div class="input-field "> 
+                          <div class="form-group">
+                              <div class="input-field">
+                                  <textarea id="description" class="materialize-textarea" name="description" style="max-height: 200px; resize: none" maxlength="450"></textarea>
+                                  <label for="description">{{ trans('messages.company.description') }}</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="input-field "> 
+                          <div class="form-group">
+                              <div class="input-field">
+                                  <textarea id="missionStatement" class="materialize-textarea" name="missionStatement" style="max-height: 200px; resize: none" ></textarea>
+                                  <label for="missionStatement">{{ trans('messages.company.missionStatement') }}</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="input-field "> 
+                          <div class="form-group">
+                              <div class="input-field">
+                                  <textarea id="visionStatement" class="materialize-textarea" name="visionStatement" style="max-height: 200px; resize: none"></textarea>
+                                  <label for="visionStatement">{{ trans('messages.company.visionStatement') }}</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="input-field "> 
+
+                          <label for="input-file-now">Logo</label>
+                          <div class="form-group">
+                              <input type="file" name="logo" id="input-file-now" data-allowed-file-extensions="jpg png" accept=".jpg,.png" class="dropify form-control" />
+                          </div>
+                      </div>
+                              <br />
+
+                      <div class="row">
+                          <div class="input-field col m6 s12"> 
+                              <!-- <div class="form-group"> -->
+                                  <i class="fa fa-phone prefix"></i>
+                                  <input type="text" class="form-control" name="mainLandPhone" id="mainLandPhone" >
+                                  <label class="control-label" for="mainLandPhone">{{ trans('messages.company.mainLandPhone') }}</label>
+                              <!-- </div> -->
+                          </div>
+                          <div class="input-field col m6 s12"> 
+                              <div class="form-group">
+                                  <i class="fa fa-envelope prefix"></i>
+                                  <span class="help-block"></span>
+                                  <input type="text" class="form-control" name="mainEmail" id="mainEmail" >
+                                  <label class="control-label" for="mainEmail">{{ trans('messages.company.mainEmail') }}</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col m6 s12"> 
+                              <div class="form-group">
+                                  <i class="fa fa-facebook prefix"></i>
+                                  <span class="help-block"></span>
+                                  <input type="text" class="form-control" name="mainFacebookProfile" id="mainFacebookProfile" >
+                                  <label class="control-label" for="mainFacebookProfile">{{ trans('messages.company.mainFacebookProfile') }}</label>
+                              </div>
+                          </div>
+                          <div class="input-field col m6 s12"> 
+                              <div class="form-group">
+                                  <i class="fa fa-twitter prefix"></i>
+                                  <span class="help-block"></span>
+                                  <input type="text" class="form-control" name="mainTwitterProfile" id="mainTwitterProfile" >
+                                  <label class="control-label" for="mainTwitterProfile">{{ trans('messages.company.mainTwitterProfile') }}</label>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="input-field col m6 s12"> 
+                              <div class="form-group">
+                                  <i class="fa fa-instagram prefix"></i>
+                                  <span class="help-block"></span>
+                                  <input type="text" class="form-control" name="mainInstagramProfile" id="mainInstagramProfile" >
+                                  <label class="control-label" for="mainInstagramProfile">{{ trans('messages.company.mainInstagramProfile') }}</label>
+                              </div>
+                          </div>
+                          <div class="input-field col m6 s12"> 
+                              <div class="form-group">
+                                  <i class="fa fa-google-plus-official prefix"></i>
+                                  <span class="help-block"></span>
+                                  <input type="text" class="form-control" name="mainGooglePlusProfile" id="mainGooglePlusProfile" >
+                                  <label class="control-label" for="mainGooglePlusProfile">{{ trans('messages.company.mainGooglePlusProfile') }}</label>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="buttons">
+                          <button class="button nextStep">
+                          {{trans('messages.next') }}</button>
+                      </div>
+            `,
+        },
+        beforeNextStep(container){
+              
+        }
+
+      },
+
+
+      ];
+
+      
+      let installerFormWizard =  $("#installerFormWizard");
+      var installerForm = new FormWizard(Steps, "register.php", installerFormWizard )
+      installerForm.render();
+
+
+  </script>
+  
+  <style>
+
+     .image_view_loader_container .img_view{
+        width:  100%;
+        height: 230px;
+        min-width: 100%;
+     }
+  </style>
+
+  <script type="text/babel">
+        let products = [ 
+            {name: "Producto 1", description: "Descripción 1", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+            {name: "Producto 2", description: "Descripción 2", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+            {name: "Producto 3", description: "Descripción 3", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+            {name: "Producto 4", description: "Descripción 4", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+            {name: "Producto 5", description: "Descripción 5", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+        ];
+
+        let container =  $("#testP");
+        let Padmin =  new ProductsAdmin(container, products);
+        Padmin.render();
+        ProductsAdmin.initEvents(Padmin);
+
+  </script>
 </html>

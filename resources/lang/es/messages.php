@@ -89,4 +89,18 @@ return [
         'exit' => 'Salir',
         'initApp' => 'Iniciar aplicación'
     ],
+
+      /**
+     *
+     * Products translation
+     *
+     */
+     'product' => [
+        'addProduct' => 'Agregar producto',
+        'productName' =>  'Nombre',
+        'productDescription' => 'Descripción',
+        'productCurrency' => 'Moneda',
+        'loadImage' => 'Cargar'
+     ],
+
 ];
