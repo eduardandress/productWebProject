@@ -5,6 +5,7 @@ namespace Installer\Helpers;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Doctrine\DBAL\Driver\PDOConnection;
 class DatabaseManager
 {
 
@@ -18,6 +19,22 @@ class DatabaseManager
         return $this->migrate();
     }
 
+    public function newPDO() {
+            $dbconnection = env('DB_CONNECTION');
+            $dbhost = env('DB_HOST');
+            $dbport = env('DB_PORT');
+            $dbusername= env('DB_USERNAME');
+            $dbpassword = env('DB_PASSWORD');
+
+            $dsn = $dbconnection.':host='.$dbhost.';port='.$dbport;
+
+            try {
+                return new PDOConnection($dsn, $dbusername, $dbpassword, null);
+            }
+            catch (Exception $e){
+                return $this->response($e->getMessage());
+            }
+    }
     /**
      * Run the migration and call the seeder.
      *
@@ -26,6 +43,10 @@ class DatabaseManager
     private function migrate()
     {
         try{
+            $dbname = env('DB_DATABASE');
+            $pdo = $this->newPDO();
+            $pdo->query("CREATE DATABASE IF NOT EXISTS $dbname");
+
             Artisan::call('migrate');
         }
         catch(Exception $e){
@@ -63,7 +84,7 @@ class DatabaseManager
     {
         return array(
             'status' => $status,
-            'message' => $message
+            'message' => utf8_encode($message)
         );
     }
 }

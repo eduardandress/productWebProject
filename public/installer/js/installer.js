@@ -3,13 +3,14 @@ class FormWizard {
 
 	constructor(steps, action, container){
 		this.steps = steps.map((e, i) => {
-			return new FormStep(e.props);
+			return new FormStep(e.props, e.beforeNextStep, e.afterRender);
 		})
 		this.container = container;
 		this.activeStep = 0;
 		this.actionUrl = action;
 		this.isRendered = false;
 	}
+
 	getContainer(){
 		return this.container;
 	}
@@ -33,7 +34,14 @@ class FormWizard {
 		                  ? nextStep
 		                  : this.activeStep;
 
+    let activeStepInstance =  this.steps[this.activeStep];
+
 		this.render();
+
+		if(activeStepInstance.afterRender){
+    	activeStepInstance.afterRender();
+    }
+
 	}
 
 	render(){
@@ -49,7 +57,7 @@ class FormWizard {
 		stepItem.addClass("active")
 
 		this.container.find(".stepsContainer").html( `
-			<form action = ${this.actionUrl}>
+			<form action = ${this.actionUrl} >
 				${activeStep.html()}
 			</form>
 		`);
@@ -68,9 +76,11 @@ class FormStep {
 	static className = ".stepContainer";
 	static nextStepClass = ".nextStep";
 
-    constructor(props){
+    constructor(props, beforeNextStep, afterRender){
     	this.isValid = true;
     	this.props = props;
+    	this.beforeNextStep = beforeNextStep ;
+    	this.afterRender = afterRender;
     }
     getId(){
     	return this.props.id;
@@ -85,7 +95,7 @@ class FormStep {
 
     	// Si no es el primer estado no se valida;
     	if(!this.props.isInitialState){
-			this.isValid = true;
+				this.isValid = true;
     	}
 
        return this.isValid;
@@ -112,25 +122,28 @@ class FormStep {
     			return;
     		}
 
-			let beforeNextStep = instance.beforeNextStep;
-			let fnResult = new Promise(function(resolve, reject){
-				resolve();
-			});
+				let beforeNextStep = instance.beforeNextStep;
+				let fnResult = new Promise(function(resolve, reject){
+					resolve();
+				});
 
-			if(beforeNextStep){
-				fnResult = beforeNextStep();
-			}
-
-			fnResult.then(() => {
-				// Se verifica si no es el ultimo estado
-				if(!instance.isFinalStep()){
-					formWizard.updateStep();
-				}else{
-					//Se guarda/envía la info
-					formWizard.save();
+				if(beforeNextStep){
+					 fnResult = instance.beforeNextStep(wizardContainer );
 				}
 
-			})
+				fnResult.then(() => {
+					// Se verifica si no es el ultimo estado
+					if(!instance.isFinalStep()){
+						formWizard.updateStep();
+					}else{
+						//Se guarda/envía la info
+						formWizard.save();
+					}
+
+				}, () => {
+
+						console.log("Error");
+				})
 
 
 
@@ -192,24 +205,62 @@ class ProductComp {
 	getPictureUrl(){
 		return this.mainPictureURL;
 	} 
+	getRank() {
+		return this.rank;
+	}
 	setPictureUrl(url){
 		this.mainPictureURL =  url;
 	}
+
 	html(){
 
 		return `
-			 <li class="collection-item avatar">
+			 	<li data-id="${this.id}" class="${ProductComp.viewClassName} collection-item avatar">
 		      <img src="${this.mainPictureURL}" alt="" class="circle">
 		      <span class="title">${this.name}</span>
-		      <p>${this.description} <br>
-		       <span> ${this.price}</span>
-		       <span> ${this.currencyAbbr}</span>
-
+		      <p>
+			      	${this.description} <br>
+			       <span> ${this.price}</span>
+			       <span> ${this.currencyAbbr}</span>
+							 <select  name="newProductRating" class="rating">
+	                      <option value="1">1</option>
+	                      <option value="2">2</option>
+	                      <option value="3">3</option>
+	                      <option value="4">4</option>
+	                      <option value="5">5</option>
+	              </select>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+
+		      <div class="secondary-content">
+			      <a href="#" class="showProduct"><i class="material-icons">mode_edit</i></a>
+
+			      <a href="#" class="deleteProduct"><i class="material-icons">delete</i></a>
+
+		      </div>
+
 		    </li>
 		`
 
+	}
+	reRender(){
+		//get the product element
+		var productViewElement= $("[data-id='" + this.getId() + "']");
+
+		//replace the html with the new one
+		productViewElement.replaceWith(this.html());
+
+		var ratingStars = $("[data-id='"+this.getId()+"'] .rating");
+		ratingStars.barrating({
+	        theme: 'css-stars',
+	        showSelectedRating: false,
+	        readonly: true
+  	});
+		ratingStars.barrating('set',this.rank)
+
+	}
+	setProperties(props){
+		 Object.assign(this, props);
+		 return this;
 	}
 }
 
@@ -217,13 +268,13 @@ class ProductsAdmin {
 
 	static viewClassName = "product_admin_container";
 
-	constructor(container, products, productModaId){
+	constructor(container, products, productModalId){
 		this.products = products.map( (p, i) => {
 			return new ProductComp(p);
 		});
 		this.container = container;
 		this.isRendered = false;
-		this.productModal = new ProductModal(productModaId);
+		this.productModal = new ProductModal(productModalId, this);
 	}
 
 	findProduct(id){
@@ -231,8 +282,36 @@ class ProductsAdmin {
 			 return p.getId() === id;
 		})[0];
 	}
+	updateProduct(id, properties){
+		// we find the instance with that id
+		var product = this.findProduct(id);
+		product.setProperties(properties);
+		product.reRender();
+		return product;
+	}
+
+	deleteProduct(product) {
+		if(product) {
+				// First we delete it from the view.
+			$("[data-id='"+product.getId()+"']").remove();
+
+			// then we find it in our array and delete it.
+			var pos = this.products.indexOf(product);
+			if(pos != -1) {
+				this.products.splice(pos, 1);
+			}
+		}
+	}
 	getContainer(){
 		return this.container;
+	}
+	getProducts(string = false){
+
+		if(string) {
+			return JSON.stringify(this.products);
+		}
+
+		return this.products;
 	}
 	html(){
 
@@ -240,16 +319,18 @@ class ProductsAdmin {
 			return p.html();
 		});
 
+		var noProductsMessage = '';
+		productsView = productsView.length > 0 ? productsView.join("") : noProductsMessage;
 		return `
 			 <div class="row">
-					<div class="col s6 offset-s8">
-							<a class="btnAddProduct btn-floating btn-large red" href="#productModal">
-					            <i class="material-icons">mode_add</i>
+					<div class="right-align">
+							<a class="btnAddProduct btn-floating btn-large green" href="${this.productModal.getView()}">
+					            <i class="material-icons">library_add</i>
 					        </a>
 					</div>
 			 </div>
 			 <ul class="${ProductsAdmin.viewClassName} collection">
-					${productsView.join("")}
+					${productsView}
 			 </ul>
 		`
 /*
@@ -268,7 +349,7 @@ class ProductsAdmin {
 		// Input Change Event.
 		let container = productAdminInstance.getContainer();
 
-		container.on("change", "." + ProductsAdmin.viewClassName + " .image_view_input_file", function(e){
+		$("body").on("change", ".image_view_input_file", function(e){
 
 			//Read the input content.
 			var tgt = e.target || window.event.srcElement,
@@ -284,16 +365,6 @@ class ProductsAdmin {
 									  .find(".img_view");
 				//set the url to the img
 				imageTag.attr("src",  url);
-				//Let's update the product img url...
-				//get the product class name view
-				var productContainerClass = "."+ProductComp.viewClassName;
-				//get the product container
-				var productContainer =  input.closest(productContainerClass);
-				var productId =  productContainer.attr("data-id");
-				//let's look for the productComp instance
-				var product = productAdminInstance.findProduct(productId);
-	            //let's update the url name;
-	            product.setPictureUrl(url);
 
 	        }
 	        fr.readAsDataURL(files[0]);
@@ -301,15 +372,72 @@ class ProductsAdmin {
 		})
 
 		
-
 		container.on("click", ".btnAddProduct", function(e){
 			e.preventDefault();
 
-			this.productModal.showModal();
+			productAdminInstance.productModal.showModal();
 
 		});
 
+		// Show or edit product information
+		container.on("click", "." + ProductsAdmin.viewClassName + " .showProduct", function(e){
+				e.preventDefault();
 
+				var showBtn = $(this);
+				//get the product class name view
+				var productContainerClass = "."+ProductComp.viewClassName;
+				//get the product container
+				var productContainer =  showBtn.closest(productContainerClass);
+				var productId =  productContainer.attr("data-id");
+				//let's look for the productComp instance
+				var product = productAdminInstance.findProduct(productId);
+
+				// Now we load the product information in the modal
+			  productAdminInstance.productModal.loadInfo(product);
+		});
+
+		// Delete product from the list
+		container.on("click", "." + ProductsAdmin.viewClassName + " .deleteProduct", function(e){
+				e.preventDefault();
+
+				var deleteBtn = $(this);
+				//get the product class name view
+				var productContainerClass = "."+ProductComp.viewClassName;
+				//get the product container
+				var productContainer =  deleteBtn.closest(productContainerClass);
+				var productId =  productContainer.attr("data-id");
+
+				//let's look for the productComp instance
+				var product = productAdminInstance.findProduct(productId);
+
+				// Now we pass the product to be deleted
+			  productAdminInstance.deleteProduct(product);
+		});
+
+		$("body").on("click", "#" + productAdminInstance.productModal.getView().attr('id') + " .saveProductBtn", function(e){
+			e.preventDefault();
+			productAdminInstance.productModal.save();
+
+		});
+
+		$("body").on("click", "#" + productAdminInstance.productModal.getView().attr('id') + " .cancelBtn", function(e){
+			e.preventDefault();
+			productAdminInstance.productModal.clear();
+
+		});
+
+		container.on("click", "."+ProductComp.viewClassName + " .btnAddProduct", function(e){
+			e.preventDefault();
+
+			productAdminInstance.productModal.showModal();
+
+		});
+
+		$("#" + productAdminInstance.productModal.getView().attr('id') + ' .rating').barrating({
+	        theme: 'css-stars',
+	        showSelectedRating: false,
+  	});
+	 	
 
 	}
 	render(){
@@ -317,6 +445,24 @@ class ProductsAdmin {
 		if(!this.isRendered){
 			this.isRendered = true;
 		}
+	}
+	addProductToList(product){
+		let container = "." + ProductsAdmin.viewClassName;
+
+		//Push the new product to the product list
+		this.products.push(product);
+
+		// We append the product view to the the container
+		$(container).append(product.html());
+
+		var ratingStars = $("[data-id='"+product.getId()+"'] .rating");
+		ratingStars.barrating({
+	        theme: 'css-stars',
+	        showSelectedRating: false,
+	        readonly: true
+  	});
+		ratingStars.barrating('set',product.rank);
+
 	}
 }
 
@@ -327,36 +473,50 @@ class ProductModal {
 		description: ".description",
 		price: ".price",
 		currency: ".currency",
-		picture: ".img_view"
+		picture: ".img_view",
+		rank: ".rating"
 	}
 
-	constructor(viewId){
-		this.viewId = viewId;
+	constructor(view, productAdminInstance){
+		this.view = view;
+
+		this.productAdminInstance = productAdminInstance;
 	}
 	showModal(){
-		this.viewId.openModal();
+		this.view.openModal({dismissible:false});
+	}
+	getView(){
+		return this.view;
 	}
 	hideModal(){
-		this.viewId.closeModal();
+		this.view.closeModal();
 	}
 	loadInfo(product){
-	
+		this.view.attr("productId", product.getId());
 		this.view.find(ProductModal.fields.name).val(product.getName());
 		this.view.find(ProductModal.fields.description).val(product.getDescription());
 		this.view.find(ProductModal.fields.price).val(product.getPrice());
 		this.view.find(ProductModal.fields.currency).val(product.getCurrency());
 		this.view.find(ProductModal.fields.picture).attr("src", product.getPictureUrl());
+		this.view.find(ProductModal.fields.rank).val(product.getRank());
 
+		var ratingStars = this.view.find('.rating');
+		ratingStars.barrating('set', product.getRank())
+
+		// then we open the modal
+		this.showModal();
 	}
 
 	save(){
 
-		//
+		// Take the values from the inputs
+		let id = this.view.attr('productId') ? this.view.attr('productId') : null ;
 		let name = this.view.find(ProductModal.fields.name).val();
 		let description = this.view.find(ProductModal.fields.description).val();
 		let price = this.view.find(ProductModal.fields.price).val();
 		let currency = this.view.find(ProductModal.fields.currency).val();
 		let picture = this.view.find(ProductModal.fields.picture).attr("src");
+		let rank = this.view.find(ProductModal.fields.rank).val();
 
 		let productInfo = {
 			name: name,
@@ -364,12 +524,29 @@ class ProductModal {
 			price: price,
 			currencyAbbr: currency,
 			mainPictureURL: picture,
-			rank: -1
+			rank: rank
 		}
 
-		let newProductComp = new ProductComp(productInfo);
-	}
+		// If it's not a new instance, which has an id already assigned...
+		if(id) {
+			this.productAdminInstance.updateProduct(id, productInfo);
+		} else {
+			var newProductComp = new ProductComp(productInfo);
+			this.productAdminInstance.addProductToList(newProductComp);
+		}
 
+		this.clear();
+	}
+	clear() {
+		this.view.attr('productId', "") ;
+		this.view.find(ProductModal.fields.name).val("");
+		this.view.find(ProductModal.fields.description).val("");
+		this.view.find(ProductModal.fields.price).val("");
+		this.view.find(ProductModal.fields.currency).val("");
+		this.view.find(ProductModal.fields.picture).attr("src","");
+		this.view.find(ProductModal.fields.rank).val("");
+		this.view.find('.rating').barrating('set', 1);
+	}
 
 }
 

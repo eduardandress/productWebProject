@@ -24,19 +24,6 @@ class EnvironmentController extends Controller
     }
 
     /**
-     * Display the Environment page.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function environment()
-    {
-        $envConfig = $this->EnvironmentManager->getEnvContent();
-
-        return view('installer::environment', compact('envConfig'));
-    }
-
-
-    /**
      * Processes the newly saved environment configuration and redirects back.
      *
      * @param Request $input

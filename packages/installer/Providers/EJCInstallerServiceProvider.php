@@ -50,9 +50,9 @@ class EJCInstallerServiceProvider extends ServiceProvider
             __DIR__.'/../Config/installer.php' => base_path('config/installer.php'),
         ]);
 
-        $this->publishes([
-            __DIR__.'/../assets' => public_path('installer'),
-        ], 'public');
+        // $this->publishes([
+        //     __DIR__.'/../assets' => public_path('installer'),
+        // ], 'public');
 
 
         // $this->publishes([

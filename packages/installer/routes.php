@@ -29,14 +29,15 @@ Route::group(['prefix' => 'install', 'as' => 'EJCInstaller::', 'namespace' => 'I
             'uses' => 'PermissionsController@permissions'
         ]);
 
-        Route::get('company', [
-            'as' => 'company',
-            'uses' => 'CompanySetupController@company'
-        ]);
 
         Route::post('company/save', [
             'as' => 'companySave',
             'uses' => 'CompanySetupController@save'
+        ]);
+
+        Route::post('products/save', [
+            'as' => 'products',
+            'uses' => 'ProductController@save'
         ]);
 
         Route::get('database', [

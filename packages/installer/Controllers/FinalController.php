@@ -17,6 +17,6 @@ class FinalController extends Controller
     {
         $fileManager->update();
 
-        return view('installer::finished');
+        return response('Installation file created', 200);
     }
 }

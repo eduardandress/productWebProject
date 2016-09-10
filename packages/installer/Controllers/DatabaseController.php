@@ -30,7 +30,6 @@ class DatabaseController extends Controller
     {
         $response = $this->databaseManager->migrateAndSeed();
 
-        return redirect()->route('EJCInstaller::company')
-                         ->with(['message' => $response]);
+        return response()->json($response);
     }
 }

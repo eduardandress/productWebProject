@@ -13,7 +13,8 @@
     <link href="{{URL::asset('assets/font-awesome-4.6.3/css/font-awesome.min.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
 
     <link href="{{URL::asset('assets/dropify/css/dropify.min.css')}}" type="text/css" rel="stylesheet" media="screen,projection"/>
-
+    <link rel="stylesheet" href="{{URL::asset('assets/jqueryBarRating/themes/css-stars.css')}}">
+    
     <script src="{{URL::asset('assets/js/jquery-3.1.0.min.js')}}"></script>
 
     <script src="{{URL::asset('assets/js/materialize.js')}}"></script>
@@ -21,8 +22,7 @@
 
     <script src="{{URL::asset('installer/js/babel.min.js')}}"></script>
     <script type="text/babel" src="{{URL::asset('installer/js/installer.js')}}"></script>
-
-
+    <script src="{{URL::asset('assets/jqueryBarRating/jquery.barrating.min.js')}}"></script>
 
   </head>
   <body>
@@ -55,7 +55,7 @@
     </div> -->
 
      <div class="master">
-      <div class="col s6">
+      <div class="container">
         <div class="box">
           <div class="header">
               <h1 class="header__title">@yield('title')</h1>
@@ -64,9 +64,11 @@
             
               <ul class="step">
                 <li class="step__divider"></li>
-                <li class="step__item "><i class="step__icon database"></i></li>
+                <li class="step__item "><i class="step__icon done_all"></i></li>
                 <li class="step__divider"></li>
-                <li class="step__item "><i class="step__icon  fa-building"></i></li>
+                <li class="step__item "><i class="step__icon  sdfdf"></i></li>
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon business"></i></li>
                 <li class="step__divider"></li>
                 <li class="step__item "><i class="step__icon permissions"></i></li>
                 <li class="step__divider"></li>
@@ -86,20 +88,18 @@
         </div>
       </div>  
     </div>
-    <div id="productModal" class="modal">
+    <div id="productModal" class="modal" dismissible="false">
       <div class="modal-content">
         <h4>{{ trans('messages.product.addProduct') }}</h4>
-
-
-        <div data-id="${this.id}" class="${ProductComp.viewClassName} card-panel grey lighten-5  ">
+        <div class="card-panel grey lighten-5">
             <div class="row">
                 <div class="col s8">
                     <div class="row">
                       <div class="col s12">
                          <div class="input-field">
 
-                            <input placeholder="max 100 caracteres"  type="text" value="${this.name}" class="validate" id="nombre">
-                            <label for="nombre" >{{trans('messages.product.productName') }}</label>
+                            <input placeholder="max 100 caracteres"  type="text" value="" class="validate name" id="name">
+                            <label for="name" >{{trans('messages.product.productName') }}</label>
 
                         </div>
                       </div>
@@ -107,24 +107,36 @@
                     <div class="row">
                       <div class="col s12">
                         <div class="input-field">
-                          <textarea id="descripcion"
-                            values="${this.description}" class="materialize-textarea">
+                          <textarea id="description"
+                             class="materialize-textarea description">
                           </textarea>
-                                 <label for="descripcion" >{{ trans('messages.product.productDescription') }}</label>
+                                 <label for="description" >{{ trans('messages.product.productDescription') }}</label>
                         </div>
                       </div>
                     </div>
 
                     <div class="row">
                          <div class="input-field col s6">
-                            <input placeholder="max 100 caracteres"  type="text" value="${this.price}" class="validate" id="precio">
-                              <label for="precio" >Precio</label>
+                            <input placeholder="max 100 caracteres"  type="text" value="" class="validate price" id="price">
+                              <label for="price" >{{trans('messages.product.productPrice') }}</label>
                         </div>
                         <div class="input-field col s6">
-                            <input placeholder="max 100 caracteres" value="${this.currencyAbbr}" type="text" class="validate" id="moneda">
-                                  <label for="moneda">{{ trans('messages.product.currency') }}</label>
+                            <input placeholder="max 100 caracteres" value="" type="text" class="validate currency" id="currency">
+                                  <label for="currency">{{ trans('messages.product.productCurrency') }}</label>
                         </div>
 
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                          <label for="newProductRating" >{{trans('messages.product.productRating') }}</label>
+                                <select  name="newProductRating" class="rating">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                </select>
+                        </div>
                     </div>
                 </div>
                 <div class="col s4">
@@ -147,11 +159,10 @@
 
       </div>
       <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-      </div>
-    </div>
 
-    <div id="testP">
+        <a href="#!" class="cancelBtn modal-action modal-close waves-effect waves-green btn-flat">{{ trans('messages.product.cancel') }}</a>
+        <a href="#!"  class="saveProductBtn modal-action modal-close waves-effect waves-green btn-flat">{{ trans('messages.product.save') }}</a>
+      </div>
     </div>
 
   </body>
@@ -176,7 +187,9 @@
               </div>`
         },
         beforeNextStep(container){
-    
+           return  new Promise(function(resolve, reject){
+              resolve();
+           }); 
         }
 
       },
@@ -209,7 +222,11 @@
             `,
         },
         beforeNextStep(container){
+            return  new Promise(function(resolve, reject){
 
+              resolve();
+               
+           }); 
         }
 
       },
@@ -224,8 +241,8 @@
             template: `
                
                 <ul class="list">
-                    @foreach($requirements['requirements'] as $extention => $enabled)
-                    <li class="list__item @if($enabled) success @else error @endif">{{ $extention }}</li>
+                    @foreach($requirements['requirements'] as $extention => $result)
+                    <li class="list__item @if($result['result']) success @else error @endif">{{ $extention }} @if(isset($result['error'])) ( {{$result['error']}} )@endif</li>
                     @endforeach
                 </ul>
 
@@ -239,7 +256,21 @@
             `,
         },
         beforeNextStep(container){
+           return  new Promise(function(resolve, reject){
 
+                $.ajax({
+                    url:'install/database',
+                    method:'GET',
+                    success : function(response){
+                        if(response.status && response.status === 'success'){
+                          resolve();
+                        } else {
+                          console.log(response.message);
+                          reject();
+                        }
+                    }
+                })
+           }); 
         }
 
       },
@@ -271,7 +302,9 @@
             `,
         },
         beforeNextStep(container){
-
+            return  new Promise(function(resolve, reject){
+              resolve();
+           }); 
         }
 
       },
@@ -279,42 +312,11 @@
 
         props: {
             id: "#step5",
-            title: "{{ trans('messages.requirements.title') }}",
-            iconClass: ".fa-building",
+            title: "{{ trans('messages.company.title') }}",
+            iconClass: ".business",
             isInitialStep: false,
             isFinalStep: false,
             template: `
-               
-                <ul class="list">
-                    @foreach($requirements['requirements'] as $extention => $enabled)
-                    <li class="list__item @if($enabled) success @else error @endif">{{ $extention }}</li>
-                    @endforeach
-                </ul>
-
-                @if(!isset($requirements['errors']))
-                    <div class="buttons">
-                        <a class="button nextStep" href="#">
-                        {{ trans('messages.next') }}
-                        </a>
-                    </div>
-                @endif
-            `,
-        },
-        beforeNextStep(container){
-
-        }
-
-      },
-       {
-
-        props: {
-            id: "#step6",
-            title: "{{ trans('messages.company.title') }}",
-            iconClass: ".database",
-            isInitialStep: false,
-            isFinalStep: true,
-            template: `
-           
                 <p class="paragraph">{{ trans('messages.company.message') }}</p>
                       <div class="input-field"> 
                           <div class="form-group">
@@ -418,11 +420,134 @@
             `,
         },
         beforeNextStep(container){
-              
-        }
+           return  new Promise(function(resolve, reject){
+                  var formData = new FormData($("form")[0]);
+                  $.ajax({
+                        url:'install/company/save',
+                        method:'POST',
+                        data: formData,
+                        processData : false,
+                        contentType : false,  
+                        success : function(response){
+                            if(response.status && response.status === 'success'){
+                              resolve();
+                            } else {
+                              console.log(response.message);
+                              reject();
+                            }
+                        }
+                  }) 
+           }); 
+        },
+        afterRender(container) {
+          $('.dropify').dropify({
+              messages: {
+                  'default': '<p class="center-align">{{trans("messages.company.dropLogoMessage")}}</p>',
+                  'replace': '{{trans("messages.company.replaceLogoMessage")}}',
+                  'remove':  '{{trans("messages.company.removeLogoMessage")}}',
+                  'error':   '{{trans("messages.company.errorUploadLogo")}}'
+              }
+          });
+         
 
+
+        }
+      },
+      {
+
+        props: {
+            id: "#step6",
+            title: "{{ trans('messages.product.title') }}",
+            iconClass: ".sdfdf",
+            isInitialStep: false,
+            isFinalStep: false,
+            options: {
+               'padmin': new ProductsAdmin($("#productsContainer"), [], $('#productModal'), $('#inputProducts') )
+               
+            },
+            template: `
+           
+              <div id="productsContainer">
+              </div>
+              <div class="buttons">
+                  <button class="button nextStep">
+                  {{trans('messages.next') }}</button>
+              </div>
+            `,
+        },
+        beforeNextStep(container){
+
+          var products = this.props.options.padmin.getProducts(true);
+
+          return  new Promise(function(resolve, reject){
+              $.ajax({
+                        url:'install/products/save',
+                        method:'POST',
+                        data: products,
+                        processData: false,
+                        contentType : false,  
+                        success : function(response){
+                            if(response.status && response.status === 'success'){
+                              resolve();
+                            } else {
+                              console.log(response.message);
+                              reject();
+                            }
+                        }
+               }) 
+          }); 
+            
+        },
+        afterRender(container) {
+            /* let products = [ 
+                {name: "Producto 1", description: "Descripción 1", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+                {name: "Producto 2", description: "Descripción 2", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+                {name: "Producto 3", description: "Descripción 3", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+                {name: "Producto 4", description: "Descripción 4", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+
+                {name: "Producto 5", description: "Descripción 5", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
+            ]; */
+            
+           let cont =  $("#productsContainer");
+            /* let Padmin =  new ProductsAdmin(cont, [], $('#productModal'), $('#inputProducts') ); 
+            
+            Padmin.render();
+            ProductsAdmin.initEvents(Padmin);*/
+
+            this.props.options.padmin = new ProductsAdmin(cont, [], $('#productModal')); 
+            this.props.options.padmin.render();
+            ProductsAdmin.initEvents(this.props.options.padmin);
+        }
+        
+      },
+      {
+
+        props: {
+            id: "#step7",
+            title: "{{ trans('messages.final.title')}}",
+            iconClass: ".done_all",
+            isInitialStep: false,
+            isFinalStep: true,
+            template: `
+           
+              <p class="paragraph">{{ session('message')['message'] }}</p>
+              <div class="buttons">
+                  <a href="{{ route('CoreRoutes::landing_page') }}" class="button">{{ trans('messages.final.initApp') }}</a>
+              </div>
+            `,
+        },
+        beforeNextStep(container){
+            return  new Promise(function(resolve, reject){
+              resolve();
+           });    
+        },
+        
       },
 
+      
 
       ];
 
@@ -441,25 +566,14 @@
         height: 230px;
         min-width: 100%;
      }
+
+        
+     
+
   </style>
 
   <script type="text/babel">
-        let products = [ 
-            {name: "Producto 1", description: "Descripción 1", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-            {name: "Producto 2", description: "Descripción 2", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-            {name: "Producto 3", description: "Descripción 3", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-            {name: "Producto 4", description: "Descripción 4", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-            {name: "Producto 5", description: "Descripción 5", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-        ];
-
-        let container =  $("#testP");
-        let Padmin =  new ProductsAdmin(container, products);
-        Padmin.render();
-        ProductsAdmin.initEvents(Padmin);
+ 
 
   </script>
 </html>

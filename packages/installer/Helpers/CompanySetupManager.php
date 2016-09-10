@@ -22,13 +22,21 @@ class CompanySetupManager
         $this->companyRepository =$companyRepository;
     }
 
-    public function createCompany($data)
+    public function createCompany($data, $replace = true)
     {
         try {
+
+            if($replace) {
+                \DB::table('company')->truncate();
+            }
+
             $this->companyRepository->create($data);
+          
         } catch(Exception $e){
             return $this->response($e->getMessage());
         }
+
+        return $this->response('Company created!', 'success');
     }
 
     /**

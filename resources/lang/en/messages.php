@@ -95,11 +95,17 @@ return [
      *
      */
      'product' => [
+        'title' => 'Add your products',
         'addProduct' => 'Add product',
         'productName' =>  'Name',
         'productDescription' => 'Description',
+        'productPrice' => 'Price',
         'productCurrency' => 'Currency',
-        'loadImage' => 'Load'
+        'productRating' => 'Rating',
+        'loadImage' => 'Load',
+        'cancel' => 'Cancel',
+        'save' => 'Save',
+        'noProductsYet' => 'No products yet, add your first!'
      ],
 
 

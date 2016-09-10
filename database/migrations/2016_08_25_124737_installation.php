@@ -12,7 +12,7 @@ class Installation extends Migration
      */
     public function up()
     {
-       
+
         /*----------  Company Table  ----------*/
         if (!Schema::hasTable('company')) {
 

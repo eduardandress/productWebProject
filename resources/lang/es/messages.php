@@ -96,11 +96,19 @@ return [
      *
      */
      'product' => [
+        'title' => 'Agrega tus productos',
         'addProduct' => 'Agregar producto',
         'productName' =>  'Nombre',
         'productDescription' => 'Descripción',
+        'productPrice' => 'Precio',
         'productCurrency' => 'Moneda',
-        'loadImage' => 'Cargar'
+        'productRating' => 'Popularidad',
+        'loadImage' => 'Cargar',
+        'cancel' => 'Cancelar',
+        'save' => 'Guardar',
+        'noProductsYet' => 'No hay productos, agrega uno!'
+
+
      ],
 
 ];

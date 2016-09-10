@@ -19,15 +19,9 @@ class CompanySetupController extends Controller
         $this->companySetupManager = $companySetupManager;
     }
 
-    public function company()
-    {
-        return view('installer::company');
-    }
-
     public function save()
     {
       $input = Input::all();
-
       if (Input::hasFile('logo')) {
             $logo = Input::file('logo');
             $shortURL ='assets/images/CompanyLogo/';
@@ -37,12 +31,8 @@ class CompanySetupController extends Controller
             $input['logoURL'] = $shortURL.$filename;
       }
 
-      if (Schema::hasTable('company')) {
-        $this->companySetupManager->createCompany($input);
-      } else {
-        return redirect()->route('EJCInstaller::welcome');
-      }
-
-      return redirect()->route('EJCInstaller::final');
+      $response = $this->companySetupManager->createCompany($input);
+    
+      return response()->json($response);
     }
 }
