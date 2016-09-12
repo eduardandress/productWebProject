@@ -34,13 +34,13 @@ class FormWizard {
 		                  ? nextStep
 		                  : this.activeStep;
 
-    let activeStepInstance =  this.steps[this.activeStep];
+	    let activeStepInstance =  this.steps[this.activeStep];
 
-		this.render();
+			this.render();
 
-		if(activeStepInstance.afterRender){
-    	activeStepInstance.afterRender();
-    }
+			if(activeStepInstance.afterRender){
+	    	activeStepInstance.afterRender();
+	    }
 
 	}
 
@@ -108,7 +108,6 @@ class FormStep {
     	//Selector del boton siguiente del step container
     	let nextStepSelectorBtn =  FormStep.className + " " + FormStep.nextStepClass;
 
-
     	wizardContainer.on("click", nextStepSelectorBtn, function(e){
     		e.preventDefault();
 
@@ -144,8 +143,6 @@ class FormStep {
 
 						console.log("Error");
 				})
-
-
 
     	})
 
@@ -217,19 +214,21 @@ class ProductComp {
 		return `
 			 	<li data-id="${this.id}" class="${ProductComp.viewClassName} collection-item avatar">
 		      <img src="${this.mainPictureURL}" alt="" class="circle">
-		      <span class="title">${this.name}</span>
-		      <p>
-			      	${this.description} <br>
-			       <span> ${this.price}</span>
-			       <span> ${this.currencyAbbr}</span>
-							 <select  name="newProductRating" class="rating">
+		      <div class='content-container'>
+			      <span class="title">${this.name}</span>
+			      <p>
+				      	${this.description} <br>
+				       <span> ${this.price}</span>
+				       <span> ${this.currencyAbbr}</span>
+					   <select  name="newProductRating" class="rating">
 	                      <option value="1">1</option>
 	                      <option value="2">2</option>
 	                      <option value="3">3</option>
 	                      <option value="4">4</option>
 	                      <option value="5">5</option>
-	              </select>
-		      </p>
+		               </select>
+			      </p>
+		      </div>
 
 		      <div class="secondary-content">
 			      <a href="#" class="showProduct"><i class="material-icons">mode_edit</i></a>
@@ -305,6 +304,8 @@ class ProductsAdmin {
 	getContainer(){
 		return this.container;
 	}
+	
+
 	getProducts(string = false){
 
 		if(string) {
@@ -333,17 +334,6 @@ class ProductsAdmin {
 					${productsView}
 			 </ul>
 		`
-/*
-			<div class="${ProductsAdmin.viewClassName} container">
-				<div class="row">
-					<div class="col s6 offset-s8">
-							<a class="btn-floating btn-large red">
-					            <i class="material-icons">mode_add</i>
-					        </a>
-					</div>
-				</div>
-				${productsView.join("")}
-			</div>*/
 	}
 	static initEvents(productAdminInstance){
 		// Input Change Event.
@@ -416,6 +406,7 @@ class ProductsAdmin {
 
 		$("body").on("click", "#" + productAdminInstance.productModal.getView().attr('id') + " .saveProductBtn", function(e){
 			e.preventDefault();
+
 			productAdminInstance.productModal.save();
 
 		});
@@ -466,6 +457,297 @@ class ProductsAdmin {
 	}
 }
 
+class ClientsAdmin{
+
+	static viewClassName =  "clientsList";
+
+	constructor(clients, container, trans) {
+		this.clients  = clients.map(function(e, i){
+			 return new ClientComp(e, this);
+		});		
+		this.container =  container;		
+		this.isRendered = false;
+		this.trans = trans;
+	}
+	getContainer(){
+		return this.container;
+	}
+	getClientsList(){
+		let clients = this.container.find("."+ ClientsAdmin.viewClassName);
+		return clients;
+	}
+	addClient(clientInstance){
+		this.clients.push(clientInstance)
+	}
+	getTrans(){
+		return this.trans;
+	}
+	getClients(string = false){
+		let clients = this.clients.map(function(e, i ){
+			return {
+				name : e.name,
+				mainPictureURL: e.imgUrl,
+			}
+		});
+
+		if(string) return JSON.stringify(clients)
+
+		return clients;
+		
+	}
+	findClient(id, getIndex = false){
+
+		let index = -1;
+		let obj = this.clients.filter(function(e,i){
+			if(e.getId() === id) index = i;
+			return e.getId() === id;
+		})[0];
+
+		return !getIndex ? obj : index;
+	}
+	verifyAndSaveItem(notSavedItem, fn){
+
+		let container =  this.container;
+		
+		if(notSavedItem.length == 0){
+			return;
+		}
+
+		let cancel = false;
+
+		let e = notSavedItem;
+		let name = $(e).find(".inputName").val();
+		let imgUrl =  $(e).find("img").attr("src")
+		
+		let itemContainer = $(e);
+		let id = itemContainer.data("id");
+		let clientInstance = this.findClient(id);
+
+		if(name.trim() === ""){
+			
+			if(clientInstance){
+				 this.deleteClient(clientInstance);
+			}
+
+		}else{
+			fn({name:name, imgUrl: imgUrl}, clientInstance);
+		}
+
+		$(e).remove();
+	}
+
+	deleteClient(instance){
+		let index = this.findClient(instance.getId(), true);
+		this.clients.splice(index, 1);
+	}
+	render(){
+
+		let containerView = ` 
+			<div class="row">
+					<div class="right-align">
+							<a class="btnAddClient btn-floating btn-large green" href="#">
+					            <i class="material-icons">library_add</i>
+					        </a>
+					</div>
+			 </div>
+			 <ul class="${ClientsAdmin.viewClassName} collection">
+					${
+					 	this.clients.map(function(e, i){
+							return  ClientComp.html(e);
+					 	}).join("")
+				 	}
+			 </ul>
+		`;
+
+		this.container.html(containerView);
+
+		if(!this.isRendered){
+			this.isRendered = true;
+		}
+	}
+	editClient(clientInstance){
+		this.getClientsList()
+			.find("."+ClientComp.viewClassName + "[data-id='"+clientInstance
+			.getId()+"']")
+			.replaceWith(ClientComp.html(clientInstance, 'edit'));
+
+	}
+
+	static initEvents(instance){
+
+		let container = instance.getContainer();
+		
+		let addBtn =  container.find(".btnAddClient");
+		let clientClass =  "." + ClientComp.viewClassName;
+
+		container.on("click", clientClass + " img", function(e){
+
+			let inputFile = $(this).closest(clientClass).find(".inputFile");
+
+			inputFile.trigger("click");
+		});
+	
+		container.on("click", ".editClient", function(e){
+			e.preventDefault();
+			let itemContainer = $(this).closest('.' + ClientComp.viewClassName)
+			let id = itemContainer.data("id");
+			let clientInstance = instance.findClient(id);
+			instance.editClient(clientInstance);
+		});
+
+		container.on("click", ".deleteClient", function(e){
+			e.preventDefault();
+			let itemContainer = $(this).closest('.' + ClientComp.viewClassName)
+			let id = itemContainer.data("id");
+			let clientInstance = instance.findClient(id);
+
+			itemContainer.fadeOut(function(){
+				$(this).remove();
+			})
+			if(!clientInstance){
+				return;
+			}
+
+			instance.deleteClient(clientInstance);
+			
+		});
+
+		container.on("click", ".saveClient", function(e){
+			e.preventDefault();
+
+			let clientContainer  = $(this).closest("." + ClientComp.viewClassName)
+		
+			instance.verifyAndSaveItem(clientContainer, function(clientData, clientInstance){
+
+				if(!clientInstance){
+					//it's a new one!
+					let newClient = new ClientComp(clientData, instance);
+					instance.addClient(newClient);
+					newClient.render();
+					return;
+				}
+
+				clientInstance.update(clientData);
+				clientInstance.reRender();
+				
+			});
+
+		});
+
+		addBtn.on("click", function(e){
+
+			e.preventDefault();
+
+			/*instance.verifyAndSaveItem(function(clientData, clientInstance){
+
+				let newClient = new ClientComp(clientData, instance);
+				instance.addClient(newClient);
+				newClient.render();
+			})
+*/
+			let editorHtml = ClientComp.html(new ClientComp({new:true}, instance), 'edit');
+			$("."+ClientsAdmin.viewClassName).append(editorHtml);
+
+		});
+
+		container.on("change", clientClass + " .inputFile",  function(e){
+
+			//Read the input content.
+			var tgt = e.target || window.event.srcElement,
+       		files = tgt.files;
+       		var input = $(this);
+			var fr = new FileReader();
+
+	        fr.onload = function () {
+	            let url = fr.result;
+	            //Changing the img url...
+	           	//get the image tag
+				var imageTag = input.closest(clientClass).find("img").eq(0);
+				//set the url to the img
+				imageTag.attr("src",  url);
+
+	        }
+	        fr.readAsDataURL(files[0]);
+
+		});
+	}
+}
+
+class ClientComp {
+
+	static viewClassName = 'clientContainer';
+
+	constructor(props = [], clientsAdminInstance){
+		Object.assign(this, props);
+		this.id =  ClientComp.genID();
+		this.clientsAdmin =  clientsAdminInstance;
+	}
+	static genID(){
+
+	  function s4() {
+	    return Math.floor((1 + Math.random()) * 0x10000)
+	      .toString(16)
+	      .substring(1);
+	  }
+	  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+	    s4() + '-' + s4() + s4() + s4();
+
+	}
+	getAdmin(){
+		return this.clientsAdmin;
+	}
+	getId(){
+		return this.id;
+	}
+	getName(){
+		return this.name;
+	}
+	getImg(){
+		return this.imgUrl;
+	}
+
+	reRender(){
+		this.clientsAdmin.getClientsList().find("."+ClientComp.viewClassName + "[data-id='"+this.id+"']").replaceWith(ClientComp.html(this));
+	}
+	update(data){
+		Object.assign(this, data);
+	}
+
+	static html(instance, view = 'show'){
+
+
+		let name = instance.getName() || "";
+		let img =  instance.getImg() || Resourses.addLogoDefaultImg;
+		let trans = instance.getAdmin().getTrans();
+		let placeHolder = trans.clientPlaceHolder;
+
+		let inputControl = view === 'edit' ?  '<input placeHolder="' + placeHolder + '" type="text" value="'+ name  +'" class="inputName validate">' :  '<span class="title">' + instance.getName() +'</span>';
+
+		let editControl =  view !== 'edit' ?  '<a href="#" class="editClient"><i class="material-icons">mode_edit</i></a>' : '<a href="#" class="saveClient"><i class="material-icons">mode_save</i></a>';
+
+		return `
+			<li data-id="${instance.getId()}" data-view= '${view}' class="${ClientComp.viewClassName} collection-item avatar">
+		      <img src="${img}" alt="" class="circle">
+		      <input class="inputFile" type="file" style="display:none" />
+		      ${inputControl}
+
+
+			     <div class="secondary-content">
+					 ${editControl}
+				      <a href="#" class="deleteClient"><i class="material-icons">delete</i></a>
+
+			      </div>
+
+		    </li>
+		 `;
+	}
+
+	render(){
+		this.clientsAdmin.getClientsList().append(ClientComp.html(this))
+	}
+
+}
+
 class ProductModal {
 
 	static fields = {
@@ -474,7 +756,8 @@ class ProductModal {
 		price: ".price",
 		currency: ".currency",
 		picture: ".img_view",
-		rank: ".rating"
+		rank: ".rating",
+		inputFile: ".image_view_input_file"
 	}
 
 	constructor(view, productAdminInstance){
@@ -511,7 +794,14 @@ class ProductModal {
 
 		// Take the values from the inputs
 		let id = this.view.attr('productId') ? this.view.attr('productId') : null ;
-		let name = this.view.find(ProductModal.fields.name).val();
+		let nameField =  this.view.find(ProductModal.fields.name);
+
+		let name = nameField.val();
+		if(name.trim() === ""){
+			nameField.addClass("invalid");
+			return false;	
+		}
+
 		let description = this.view.find(ProductModal.fields.description).val();
 		let price = this.view.find(ProductModal.fields.price).val();
 		let currency = this.view.find(ProductModal.fields.currency).val();
@@ -535,6 +825,8 @@ class ProductModal {
 			this.productAdminInstance.addProductToList(newProductComp);
 		}
 
+		this.hideModal();
+
 		this.clear();
 	}
 	clear() {
@@ -545,6 +837,9 @@ class ProductModal {
 		this.view.find(ProductModal.fields.currency).val("");
 		this.view.find(ProductModal.fields.picture).attr("src","");
 		this.view.find(ProductModal.fields.rank).val("");
+		let input = this.view.find(ProductModal.fields.inputFile)
+		input.replaceWith(input = input.clone( true ))
+		this.view.find(".file-path").val("");
 		this.view.find('.rating').barrating('set', 1);
 	}
 

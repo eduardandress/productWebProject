@@ -4,42 +4,42 @@ namespace Installer\Helpers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Core\Repositories\CompanyRepository;
+use Core\Repositories\ProductRepository;
 
-class CompanySetupManager
+class ProductSetupManager
 {
 
     /**
      * @var string
      */
-    private $companyRepository;
+    private $productRepository;
 
     /**
      * Set the .env and .env.example paths.
      */
-    public function __construct(CompanyRepository $companyRepository)
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->companyRepository =$companyRepository;
+        $this->productRepository =$productRepository;
     }
 
-    public function createCompany($data, $replace = true)
+    public function createProduct($data, $replace = true)
     {
         try {
 
             if($replace) {
-                \DB::table('company')->truncate();
+                \DB::table('product')->truncate();
             }
 
-            $this->companyRepository->create($data);
+            $this->productRepository->create($data);
           
         } catch(Exception $e){
             return $this->response($e->getMessage());
         }
 
-        return $this->response('Company created!', 'success');
-
-
+        return $this->response('Product created!', 'success');
     }
+
+
 
     /**
      * Return a formatted error messages.
@@ -55,4 +55,7 @@ class CompanySetupManager
             'message' => $message
         );
     }
+
+
+  
 }

@@ -17,6 +17,7 @@ class FinalController extends Controller
     {
         $fileManager->update();
 
-        return response('Installation file created', 200);
+        return response()->json(\AppHelper::response('Installed!', 'success'
+        ));
     }
 }

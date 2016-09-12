@@ -9,7 +9,8 @@
     <link rel="icon" type="image/png" href="<?php echo e(asset('installer/img/favicon/favicon-96x96.png')); ?>" sizes="96x96"/>
     <link href="<?php echo e(asset('installer/css/style.min.css')); ?>" rel="stylesheet"/>
     <link href="<?php echo e(asset('assets/css/materialize.min.css')); ?>" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="<?php echo e(URL::asset('https://fonts.googleapis.com/icon?family=Material+Icons')); ?>" rel="stylesheet">
+
     <link href="<?php echo e(URL::asset('assets/font-awesome-4.6.3/css/font-awesome.min.css')); ?>" type="text/css" rel="stylesheet" media="screen,projection"/>
 
     <link href="<?php echo e(URL::asset('assets/dropify/css/dropify.min.css')); ?>" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -21,38 +22,22 @@
     <script src="<?php echo e(URL::asset('assets/dropify/js/dropify.min.js')); ?>"></script>
 
     <script src="<?php echo e(URL::asset('installer/js/babel.min.js')); ?>"></script>
+    <script>
+        var Resourses = (function(){
+            var addLogoDefaultImg = "<?php echo e(URL::asset('installer/img/addLogo.png')); ?>";
+            var imgDefaultBack = "<?php echo e(URL::asset('installer/img/imgDefaultBack.png')); ?>"; 
+            return {
+                addLogoDefaultImg: addLogoDefaultImg,
+                imgDefaultBack: imgDefaultBack
+            }
+
+        }())
+    </script>
     <script type="text/babel" src="<?php echo e(URL::asset('installer/js/installer.js')); ?>"></script>
     <script src="<?php echo e(URL::asset('assets/jqueryBarRating/jquery.barrating.min.js')); ?>"></script>
 
   </head>
   <body>
-   <!--  <div class="master">
-      <div class="col s6">
-        <div class="box">
-          <div class="header">
-              <h1 class="header__title"><?php echo $__env->yieldContent('title'); ?></h1>
-          </div>
-          <ul class="step">
-            <li class="step__divider"></li>
-            <li class="step__item <?php echo e(isActive('EJCInstaller::final')); ?>"><i class="step__icon database"></i></li>
-            <li class="step__divider"></li>
-            <li class="step__item <?php echo e(isActive('EJCInstaller::company')); ?>"><i class="step__icon  fa-building"></i></li>
-            <li class="step__divider"></li>
-            <li class="step__item <?php echo e(isActive('EJCInstaller::permissions')); ?>"><i class="step__icon permissions"></i></li>
-            <li class="step__divider"></li>
-            <li class="step__item <?php echo e(isActive('EJCInstaller::requirements')); ?>"><i class="step__icon requirements"></i></li>
-            <li class="step__divider"></li>
-            <li class="step__item <?php echo e(isActive('EJCInstaller::environment')); ?>"><i class="step__icon update"></i></li>
-            <li class="step__divider"></li>
-            <li class="step__item <?php echo e(isActive('EJCInstaller::welcome')); ?>"><i class="step__icon welcome"></i></li>
-            <li class="step__divider"></li>
-          </ul>
-          <div class="main">
-            <?php echo $__env->yieldContent('container'); ?>
-          </div>
-        </div>
-      </div>  
-    </div> -->
 
      <div class="master">
       <div class="container">
@@ -64,11 +49,13 @@
             
               <ul class="step">
                 <li class="step__divider"></li>
-                <li class="step__item "><i class="step__icon done_all"></i></li>
+                <li class="step__item "><i class="step__icon done_all material-icons">done_all</i></li>
                 <li class="step__divider"></li>
-                <li class="step__item "><i class="step__icon  sdfdf"></i></li>
+                 <li class="step__item "><i class="step__icon  client material-icons">contacts</i></li>
                 <li class="step__divider"></li>
-                <li class="step__item "><i class="step__icon business"></i></li>
+                <li class="step__item "><i class="step__icon  products material-icons">shopping_basket</i></li>
+                <li class="step__divider"></li>
+                <li class="step__item "><i class="step__icon business material-icons">business</i></li>
                 <li class="step__divider"></li>
                 <li class="step__item "><i class="step__icon permissions"></i></li>
                 <li class="step__divider"></li>
@@ -117,11 +104,11 @@
 
                     <div class="row">
                          <div class="input-field col s6">
-                            <input placeholder="max 100 caracteres"  type="text" value="" class="validate price" id="price">
+                            <input   type="number" value="" class="validate price" id="price">
                               <label for="price" ><?php echo e(trans('messages.product.productPrice')); ?></label>
                         </div>
                         <div class="input-field col s6">
-                            <input placeholder="max 100 caracteres" value="" type="text" class="validate currency" id="currency">
+                            <input  value="" type="text" class="validate currency" id="currency">
                                   <label for="currency"><?php echo e(trans('messages.product.productCurrency')); ?></label>
                         </div>
 
@@ -141,7 +128,7 @@
                 </div>
                 <div class="col s4">
                   <div class="image_view_loader_container">
-                        <img class="img_view grey lighten-2" src="" alt="" />
+                        <img style="background-image: url('<?php echo e(URL::asset('installer/img/imgDefaultBack.png')); ?>')" class="img_view " src="" alt="" />
                       <div class="file-field input-field">
                           <div class="btn">
                             <span><?php echo e(trans('messages.product.loadImage')); ?></span>
@@ -161,7 +148,7 @@
       <div class="modal-footer">
 
         <a href="#!" class="cancelBtn modal-action modal-close waves-effect waves-green btn-flat"><?php echo e(trans('messages.product.cancel')); ?></a>
-        <a href="#!"  class="saveProductBtn modal-action modal-close waves-effect waves-green btn-flat"><?php echo e(trans('messages.product.save')); ?></a>
+        <a href="#!"  class="saveProductBtn modal-action  waves-effect waves-green btn-flat"><?php echo e(trans('messages.product.save')); ?></a>
       </div>
     </div>
 
@@ -173,6 +160,7 @@
   <script type="text/babel">
    
       let Steps = [
+
       {
 
         props: {
@@ -193,6 +181,7 @@
         }
 
       },
+       
       {
 
         props: {
@@ -325,7 +314,7 @@
                       <div class="input-field"> 
                           <div class="form-group">
                               <span class="help-block"></span>
-                              <input type="text" class="form-control" id="name" name="name" >
+                              <input type="text" class="form-control companyName" id="name" name="name" >
                               <label class="control-label" for="name"><?php echo e(trans('messages.company.name')); ?></label>
                           </div>
                       </div>
@@ -426,6 +415,12 @@
         beforeNextStep(container){
            return  new Promise(function(resolve, reject){
                   var formData = new FormData($("form")[0]);
+                  var name = $(".companyName").val();
+
+                  if(name.trim() === ""){
+                      reject();
+                  }
+
                   $.ajax({
                         url:'install/company/save',
                         method:'POST',
@@ -462,13 +457,10 @@
         props: {
             id: "#step6",
             title: "<?php echo e(trans('messages.product.title')); ?>",
-            iconClass: ".sdfdf",
+            iconClass: ".products",
             isInitialStep: false,
             isFinalStep: false,
-            options: {
-               'padmin': new ProductsAdmin($("#productsContainer"), [], $('#productModal'), $('#inputProducts') )
-               
-            },
+            options: {},
             template: `
            
               <div id="productsContainer">
@@ -481,9 +473,16 @@
         },
         beforeNextStep(container){
 
-          var products = this.props.options.padmin.getProducts(true);
-
+          var products = this.props.options.padmin.getProducts();
+  
           return  new Promise(function(resolve, reject){
+              if(products.length === 0){
+                  reject();
+                  return; 
+              }else{
+                products =  JSON.stringify(products);
+              }
+
               $.ajax({
                         url:'install/products/save',
                         method:'POST',
@@ -503,34 +502,70 @@
             
         },
         afterRender(container) {
-            /* let products = [ 
-                {name: "Producto 1", description: "Descripción 1", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-                {name: "Producto 2", description: "Descripción 2", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-                {name: "Producto 3", description: "Descripción 3", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-                {name: "Producto 4", description: "Descripción 4", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-
-                {name: "Producto 5", description: "Descripción 5", price: 300, currencyAbbr: "$", mainPictureURL: "..img/ruta/ruta", rank: 5},
-            ]; */
-            
-           let cont =  $("#productsContainer");
-            /* let Padmin =  new ProductsAdmin(cont, [], $('#productModal'), $('#inputProducts') ); 
-            
-            Padmin.render();
-            ProductsAdmin.initEvents(Padmin);*/
-
-            this.props.options.padmin = new ProductsAdmin(cont, [], $('#productModal')); 
+           this.props.options["padmin"] = new ProductsAdmin($("#productsContainer"), [], $('#productModal'), $('#inputProducts') )
             this.props.options.padmin.render();
             ProductsAdmin.initEvents(this.props.options.padmin);
+        }
+        
+      },
+         {
+
+        props: {
+            id: "#step7",
+            title: "<?php echo e(trans('messages.client.title')); ?>",
+            iconClass: ".client",
+            isInitialStep: false,
+            isFinalStep: false,
+            options: {},
+            template: `
+           
+              <div id="clientsContainer">
+              </div>
+              <div class="buttons">
+                  <button class="button nextStep">
+                  <?php echo e(trans('messages.next')); ?></button>
+              </div>
+            `,
+        },
+        beforeNextStep(container){
+
+          var clients = this.props.options.cAdmin.getClients(true);
+         
+          return  new Promise(function(resolve, reject){
+             
+              $.ajax({
+                        url:'install/clients/save',
+                        method:'POST',
+                        data: clients,
+                        processData: false,
+                        contentType : false,  
+                        success : function(response){
+                            if(response.status && response.status === 'success'){
+                              resolve();
+                            } else {
+                              console.log(response.message);
+                              reject();
+                            }
+                        }
+               }) 
+          }); 
+            
+        },
+        afterRender(container) {
+            let trans = {
+              clientPlaceHolder: "<?php echo e(trans('messages.client.clientName')); ?>"
+            }
+            this.props.options["cAdmin"] =   new ClientsAdmin( [], $("#clientsContainer"), trans);
+            this.props.options.cAdmin.render();
+        
+            ClientsAdmin.initEvents(this.props.options.cAdmin);
         }
         
       },
       {
 
         props: {
-            id: "#step7",
+            id: "#step8",
             title: "<?php echo e(trans('messages.final.title')); ?>",
             iconClass: ".done_all",
             isInitialStep: false,
@@ -548,9 +583,31 @@
               resolve();
            });    
         },
+        afterRender(container) {
+
+          return  new Promise(function(resolve, reject){
+             
+              $.ajax({
+                        url:'install/final',
+                        method:'GET',
+                        processData: false,
+                        contentType : false,  
+                        success : function(response){
+                            if(response.status && response.status === 'success'){
+                              resolve();
+                            } else {
+                              console.log(response.message);
+                              reject();
+                            }
+                        }
+               }) 
+       
+          }); 
+
+        }
         
       },
-
+     
       
 
       ];

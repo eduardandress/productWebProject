@@ -40,6 +40,12 @@ Route::group(['prefix' => 'install', 'as' => 'EJCInstaller::', 'namespace' => 'I
             'uses' => 'ProductController@save'
         ]);
 
+        Route::post('clients/save', [
+            'as' => 'clients',
+            'uses' => 'ClientController@save'
+        ]);
+
+
         Route::get('database', [
             'as' => 'database',
             'uses' => 'DatabaseController@database'

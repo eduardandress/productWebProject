@@ -101,7 +101,7 @@ return [
         'productName' =>  'Nombre',
         'productDescription' => 'Descripción',
         'productPrice' => 'Precio',
-        'productCurrency' => 'Moneda',
+        'productCurrency' => 'Moneda (Abreviación)',
         'productRating' => 'Popularidad',
         'loadImage' => 'Cargar',
         'cancel' => 'Cancelar',
@@ -109,6 +109,22 @@ return [
         'noProductsYet' => 'No hay productos, agrega uno!'
 
 
+     ],
+
+
+         /**
+     *
+     * Clients translation
+     *
+     */
+     'client' => [
+        'title' => 'Agrega tus clientes',
+        'addClient' => 'Agregar cliente',
+        'clientName' =>  'Nombre del cliente',
+        'loadImage' => 'Cargar',
+        'cancel' => 'Cargar',
+        'save' => 'Guardar',
+        'noClientsYet' => 'No hay clientes, agrega uno!'
      ],
 
 ];

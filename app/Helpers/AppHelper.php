@@ -15,4 +15,19 @@ abstract class AppHelper {
 
         return false;
   }
+
+/**
+ * Return a formatted error messages.
+ *
+ * @param $message
+ * @param string $status
+ * @return array
+ */
+	static public function  response($message, $status = 'danger'){
+	    return array(
+	        'status' => $status,
+	        'message' => $message
+	    );
+	}
+
 }
