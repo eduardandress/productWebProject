@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="flex-row">
                  @foreach ($allProducts as $product)
-                    <div class="flex-item product-item">
+                    <div  class="flex-item product-item">
                         <div class="card">
                           <div class="card-image waves-effect waves-block waves-light">
                             <img class="activator responsive-img"  src="{{URL::asset($product->mainPictureURL)}}">
@@ -33,11 +33,11 @@
                                 @endif  
                                 <span class="stars">
                                       <select  name="rating" class="rating">
-                                              <option value="1">1</option>
-                                              <option value="2">2</option>
-                                              <option value="3">3</option>
-                                              <option value="4">4</option>
-                                              <option value="5">5</option>
+                                              <option   @if ($product->rank == 1)  selected="selected"  @endif value="1" >1</option>
+                                              <option   @if ($product->rank == 2)  selected="selected"  @endif value="2">2</option>
+                                              <option   @if ($product->rank == 3)  selected="selected"  @endif value="3">3</option>
+                                              <option   @if ($product->rank == 4)  selected="selected"  @endif value="4">4</option>
+                                              <option   @if ($product->rank == 5)  selected="selected"  @endif value="5">5</option>
                                       </select>
                                 </span>
                             </div>
@@ -68,11 +68,14 @@
     (function($){
       $(function(){
 
-          $('.rating').barrating({
+          let products  = {!! json_encode($allProducts) !!}
+
+          $('.product-item .rating').barrating({
               theme: 'css-stars',
-              showSelectedRating: false
+              showSelectedRating: false,
+              readonly: true
           });
-           
+
       }); 
     })(jQuery); 
   </script>

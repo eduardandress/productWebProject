@@ -28,6 +28,9 @@ class clientController extends Controller
         $img = imagecreatefromstring($data);
     		$shortURL ='assets/images/clients/';
     		$destinationPath = public_path().'/'.$shortURL ;
+        if(!File::exists($destinationPath)) {
+          File::makeDirectory($destinationPath, $mode = 0777, true, true);
+        }
     		imagepng($img, $destinationPath.$filename);
     	 	$imageUrl = $shortURL.$filename;
         

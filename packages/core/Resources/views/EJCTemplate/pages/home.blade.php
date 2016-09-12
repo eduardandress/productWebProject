@@ -106,19 +106,19 @@
       <h2 class="center {{$demoColors['mainFontColorClass'] or '' }}">{{trans('core::main.section6Message1')}}</h2>
       <div class="container">
         <div class="flex-row {{$demoColors['thirdFontColorClass'] or '' }} ">
-            @if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile) and !empty($companyInfo->mainFacebookProfile)  )
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainFacebookProfile}}"><i class="fa fa-facebook-square fa-5x"></i> Facebook</a></i></div>
             @endif
-            @if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile) and !empty($companyInfo->mainTwitterProfile) )
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainTwitterProfile}}"><i class="fa fa-twitter-square fa-5x"></i> Twitter</a></div>
             @endif
-            @if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile) and !empty($companyInfo->mainInstagramProfile) )
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainInstagramProfile}}"><i class="fa fa-instagram fa-5x"></i> Instagram</a></div>
             @endif
-            @if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile) and !empty($companyInfo->mainGooglePlusProfile))
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainGooglePlusProfile}}"><i class="fa fa-google-plus-official fa-5x"></i> Google +</a></div>
             @endif
-            @if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile))
+            @if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile) and  !empty($companyInfo->mainLinkedInProfile))
             <div class="flex-col center"><a  target="_blank" href="{{$companyInfo->mainLinkedInProfile}}"><i class="fa fa-linkedin-square fa-5x"></i> LinkedIn</a></div>
             @endif
         </div>

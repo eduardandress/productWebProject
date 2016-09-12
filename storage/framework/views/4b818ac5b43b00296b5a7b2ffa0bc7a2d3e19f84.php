@@ -105,19 +105,19 @@
       <h2 class="center <?php echo e(isset($demoColors['mainFontColorClass']) ? $demoColors['mainFontColorClass'] : ''); ?>"><?php echo e(trans('core::main.section6Message1')); ?></h2>
       <div class="container">
         <div class="flex-row <?php echo e(isset($demoColors['thirdFontColorClass']) ? $demoColors['thirdFontColorClass'] : ''); ?> ">
-            <?php if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile)): ?>
+            <?php if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile) and !empty($companyInfo->mainFacebookProfile)  ): ?>
             <div class="flex-col center"><a  target="_blank" href="<?php echo e($companyInfo->mainFacebookProfile); ?>"><i class="fa fa-facebook-square fa-5x"></i> Facebook</a></i></div>
             <?php endif; ?>
-            <?php if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile)): ?>
+            <?php if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile) and !empty($companyInfo->mainTwitterProfile) ): ?>
             <div class="flex-col center"><a  target="_blank" href="<?php echo e($companyInfo->mainTwitterProfile); ?>"><i class="fa fa-twitter-square fa-5x"></i> Twitter</a></div>
             <?php endif; ?>
-            <?php if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile)): ?>
+            <?php if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile) and !empty($companyInfo->mainInstagramProfile) ): ?>
             <div class="flex-col center"><a  target="_blank" href="<?php echo e($companyInfo->mainInstagramProfile); ?>"><i class="fa fa-instagram fa-5x"></i> Instagram</a></div>
             <?php endif; ?>
-            <?php if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile)): ?>
+            <?php if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile) and !empty($companyInfo->mainGooglePlusProfile)): ?>
             <div class="flex-col center"><a  target="_blank" href="<?php echo e($companyInfo->mainGooglePlusProfile); ?>"><i class="fa fa-google-plus-official fa-5x"></i> Google +</a></div>
             <?php endif; ?>
-            <?php if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile)): ?>
+            <?php if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile) and  !empty($companyInfo->mainLinkedInProfile)): ?>
             <div class="flex-col center"><a  target="_blank" href="<?php echo e($companyInfo->mainLinkedInProfile); ?>"><i class="fa fa-linkedin-square fa-5x"></i> LinkedIn</a></div>
             <?php endif; ?>
         </div>
