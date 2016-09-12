@@ -28,7 +28,7 @@ return [
   'locateUsOnMap' => 'Locate us on map',
   'demoSlider1HeaderH1' => 'Material Design',
   'demoSlider1HeaderH2' => 'Design based on the fresh Material Design',
-  'demoSlider2HeaderH1' => 'Resposive Design',
+  'demoSlider2HeaderH1' => 'Responsive Design',
   'demoSlider2HeaderH2' => 'Looks great on every single device!',
   'demoSlider3HeaderH1' => 'Personalize your website easily',
   'demoSlider3HeaderH2' => 'You can quickly adapt your site and change it as you want ( appearance, texts, images), you can also extend new features.',

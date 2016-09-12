@@ -9,8 +9,9 @@ use Installer\Helpers\PermissionsChecker;
 use Installer\Helpers\CompanySetupManager;
 use Installer\Helpers\InstalledFileManager;
 use Installer\Helpers\DatabaseManager;
+use File;
 
-class WelcomeController extends Controller
+class MainController extends Controller
 {
     /**
      * Display the installer welcome page.
@@ -26,6 +27,7 @@ class WelcomeController extends Controller
         $InstalledFileManager = new InstalledFileManager();
         $dataBaseManager = new DatabaseManager();
 
+
     	$envConfig = $environmentManager->getEnvContent();
     	
         $requirements = $requirementsChecker->check(
@@ -40,5 +42,35 @@ class WelcomeController extends Controller
              'requirements' => $requirements,
              'permissions' => $permissions
         ));
+    }
+
+    public function uninstallView(){
+        return view('installer::uninstall');
+    }
+
+    public function uninstall(){
+
+        $dataBaseManager = new DatabaseManager();
+        $installedFileManager = new InstalledFileManager();
+
+
+        try {
+
+            // Cleaning the images folders
+            $clientImgPath = public_path().'/'."assets/images/clients/";
+            $productImgPath = public_path().'/'."assets/images/products/";
+            $companyLogoPath = public_path().'/'."assets/images/CompanyLogo/";
+            File::cleanDirectory($companyLogoPath);
+            File::cleanDirectory($productImgPath);
+            File::cleanDirectory($clientImgPath);
+
+            $dataBaseManager->truncateAllTables();
+
+            $installedFileManager->delete();
+        } catch(\Exception $e){
+            return view('installer.error');
+        }
+
+        return redirect()->route('CoreRoutes::landing_page');
     }
 }

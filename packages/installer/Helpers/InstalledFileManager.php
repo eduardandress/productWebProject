@@ -24,4 +24,9 @@ class InstalledFileManager
     {
         return $this->create();
     }
+
+    public function delete()
+    {
+        return unlink(storage_path('installed'));
+    }
 }

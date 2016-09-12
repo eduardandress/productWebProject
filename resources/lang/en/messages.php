@@ -9,6 +9,13 @@ return [
      */
     'title' => 'E&JC Installer',
     'next' => 'Next Step',
+    'uninstalling' => 'Uninstalling',
+    'uninstallingApp' => 'Uninstalling the application',
+    'uninstallAreYouSure' => 'Are you sure you want to uninstall the app?. Your information will be deleted.',
+    'uninstall' => 'Uninstall',
+    'loading' => 'Loading...',
+    'cancel' => 'Cancel',
+    'error' => 'Oops!',
 
 
     /**
@@ -17,7 +24,7 @@ return [
      *
      */
     'welcome' => [
-        'title'   => 'Welcome To The Installer',
+        'title'   => 'Welcome to the installer',
         'message' => 'Welcome to the setup wizard.',
     ],
 
@@ -52,6 +59,7 @@ return [
         'save' => 'Save .env',
         'success' => 'Your .env file settings have been saved.',
         'errors' => 'Unable to save the .env file, Please create it manually.',
+        'description' => 'Last environment configuration. (If you don\'t know any of this, click next).'
     ],
 
     /**
@@ -63,7 +71,7 @@ return [
         'title' => 'Setting up your company',
         'message' => 'Fill out the following form',
         'name' => 'Name',
-        'description' => 'description',
+        'description' => 'Description',
         'missionStatement' => 'Mission statement',
         'visionStatement' => 'Vision statement',
         'mainLandPhone' => 'Main phone',
@@ -75,7 +83,9 @@ return [
         'dropLogoMessage' => 'Click and select or drag your company logo.',
         'removeLogoMessage' => 'Remove',
         'replaceLogoMessage' => 'Drag and drop or click to replace.',
-        'errorUploadLogo' => 'Something wrong happend.'
+        'errorUploadLogo' => 'Something wrong happend.',
+        'mainAddress' => 'Main Address'
+
     ],
 
     /**
@@ -87,6 +97,7 @@ return [
         'title' => 'Finished',
         'finished' => 'Application has been successfully installed.',
         'exit' => 'Click here to exit',
+        'initApp' => 'Start Application'
     ],
 
      /**
@@ -119,7 +130,8 @@ return [
         'loadImage' => 'Load',
         'cancel' => 'Cancel',
         'save' => 'Save',
-        'noClientsYet' => 'No client yet, add your first!'
+        'noClientsYet' => 'No client yet, add your first!',
+        'clientImgTitle' => 'Click to select client logo'
      ],
 
 ];

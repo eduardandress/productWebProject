@@ -216,7 +216,7 @@ class ProductComp {
 		      <img src="${this.mainPictureURL}" alt="" class="circle">
 		      <div class='content-container'>
 			      <span class="title">${this.name}</span>
-			      <p>
+			      <p style="word-wrap: break-word;">
 				      	${this.description} <br>
 				       <span> ${this.price}</span>
 				       <span> ${this.currencyAbbr}</span>
@@ -550,7 +550,7 @@ class ClientsAdmin{
 					        </a>
 					</div>
 			 </div>
-			 <ul class="${ClientsAdmin.viewClassName} collection">
+			 <ul class="${ClientsAdmin.viewClassName} collection collection-client">
 					${
 					 	this.clients.map(function(e, i){
 							return  ClientComp.html(e);
@@ -727,7 +727,7 @@ class ClientComp {
 
 		return `
 			<li data-id="${instance.getId()}" data-view= '${view}' class="${ClientComp.viewClassName} collection-item avatar">
-		      <img src="${img}" alt="" class="circle">
+		      <img src="${img}" alt="" class="circle" title="${trans.clientImgTitle}">
 		      <input class="inputFile" type="file" style="display:none" />
 		      ${inputControl}
 

@@ -18,22 +18,22 @@
         <div class="col l3 s12">
           <h5 >{{trans('core::main.connectWithUs')}}</h5>
           <ul>
-          @if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainFacebookProfile) and !empty($companyInfo->mainFacebookProfile) )
             <li> <a  target="_blank" href="{{$companyInfo->mainFacebookProfile}}"><i class="fa fa-facebook-square"></i> Facebook</a></li>
           @endif
-          @if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainTwitterProfile) and !empty($companyInfo->mainTwitterProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainTwitterProfile}}"><i class="fa fa-twitter-square"></i> Twitter</a></li>
           @endif
-          @if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainInstagramProfile) and !empty($companyInfo->mainInstagramProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainInstagramProfile}}"><i class="fa fa-instagram"></i> Instagram</a></li>
           @endif
-          @if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainGooglePlusProfile) and !empty($companyInfo->mainGooglePlusProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainGooglePlusProfile}}"><i class="fa fa-google-plus-official"></i> Google +</a></li>
           @endif
-          @if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainLinkedInProfile) and !empty($companyInfo->mainLinkedInProfile))
             <li><a  target="_blank" href="{{$companyInfo->mainLinkedInProfile}}"><i class="fa fa-linkedin-square"></i> LinkedIn</a></li>
           @endif
-          @if(!is_null($companyInfo) and isset($companyInfo->mainEmail))
+          @if(!is_null($companyInfo) and isset($companyInfo->mainEmail) and !empty($companyInfo->mainEmail))
             <li><a  href="#!"><i class="fa fa-envelope"></i> {{$companyInfo->mainEmail}}</a></li>
           @endif
           </ul>

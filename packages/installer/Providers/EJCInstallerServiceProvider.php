@@ -35,6 +35,8 @@ class EJCInstallerServiceProvider extends ServiceProvider
     {
         parent::boot($router);
         app('router')->middleware('canInstall', '\Installer\Middleware\canInstall');
+        app('router')->middleware('canUninstall', '\Installer\Middleware\canUninstall');
+
         $this->loadViewsFrom(realpath(__DIR__.'/../Views'), 'installer');
         $this->mergeConfigFrom(__DIR__.'/../Config/packageInformation.php','installedPackages');
     }

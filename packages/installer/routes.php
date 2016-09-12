@@ -6,7 +6,7 @@ Route::group(['prefix' => 'install', 'as' => 'EJCInstaller::', 'namespace' => 'I
     {
         Route::get('/', [
             'as' => 'welcome',
-            'uses' => 'WelcomeController@welcome'
+            'uses' => 'MainController@welcome'
         ]);
 
         Route::get('environment', [
@@ -56,4 +56,19 @@ Route::group(['prefix' => 'install', 'as' => 'EJCInstaller::', 'namespace' => 'I
             'uses' => 'FinalController@finish'
         ]);
     });
+
+
+
 });
+
+Route::group(['as' => 'EJCInstaller::', 'namespace' => 'Installer\Controllers', 'middleware' => 'canUninstall'], function(){
+    Route::get('uninstall', [
+        'as' => 'uninstallView',
+        'uses' => 'MainController@uninstallView'
+    ]);
+
+    Route::get('uninstall/go', [
+        'as' => 'uninstall',
+        'uses' => 'MainController@uninstall'
+    ]);
+});   

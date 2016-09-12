@@ -8,8 +8,14 @@ return [
      *
      */
     'title' => 'E&JC Installer',
+    'uninstalling' => 'Desinstalando',
+    'uninstallingApp' => 'Desinstalando la aplicación',
+    'uninstallAreYouSure' => 'Estás seguro que quieres desintalar la aplicación?. Toda tu información se borrará.',
     'next' => 'Siguiente',
-
+    'uninstall' => 'Desintalar',
+    'loading' => 'Cargando...',
+    'cancel' => 'Cancelar',
+    'error' => 'Oops!',
 
     /**
      *
@@ -52,6 +58,8 @@ return [
         'save' => 'Save .env',
         'success' => 'Tu archivo .env ha sido guardado',
         'errors' => 'No se pudo guardar el archivo .env, Hazlo manualmente.',
+        'description' => 'Última configuración. (Puede omitir este paso, dale a siguiente).'
+
     ],
 
     /**
@@ -75,7 +83,8 @@ return [
         'dropLogoMessage' => 'Haz click o arrastra el logo de tu empresa.',
         'removeLogoMessage' => 'Quitar',
         'replaceLogoMessage' => 'Arrastra o haz click para reemplazar.',
-        'errorUploadLogo' => 'Ha ocurrido un error.'
+        'errorUploadLogo' => 'Ha ocurrido un error.',
+        'mainAddress' => 'Dirección principal'
     ],
 
     /**
@@ -124,7 +133,9 @@ return [
         'loadImage' => 'Cargar',
         'cancel' => 'Cargar',
         'save' => 'Guardar',
-        'noClientsYet' => 'No hay clientes, agrega uno!'
+        'noClientsYet' => 'No hay clientes, agrega uno!',
+        'clientImgTitle' => 'Click para seleccionar logo'
+
      ],
 
 ];

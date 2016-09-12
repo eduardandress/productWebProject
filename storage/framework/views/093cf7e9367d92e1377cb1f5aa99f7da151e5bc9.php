@@ -3,7 +3,7 @@
 
     <div class="nav-wrapper container-fluid">
 
-
+  
     <a id="logo-container" href="#" class="brand-logo">
         <img height="64px" class="img-responsive" src="<?php if(!is_null($companyInfo)): ?> <?php echo e(URL::asset($companyInfo->logoURL)); ?> <?php else: ?> <?php echo e(URL::asset('assets/images/company.svg')); ?> <?php endif; ?>">
         <span class="compName <?php echo e(isset($demoColors['navBarColorText']) ? $demoColors['navBarColorText'] : ''); ?>"><?php if(!is_null($companyInfo)): ?> <?php echo e(isset($companyInfo->name) ? $companyInfo->name : 'CompanyName'); ?>  <?php endif; ?> </span>

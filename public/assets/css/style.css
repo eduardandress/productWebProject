@@ -15,7 +15,7 @@
 #logo-container > img{
 	max-height: 64px;
 	width:  100%;
-	max-width:  100%;
+	max-width:  50%;
 	margin-right: 10px;
 }
 .compName{
@@ -71,7 +71,7 @@ header .carousel-slider {
 	padding: 10px;
 }
 #owl-clients .item .card  img{
-	height: 100px;
+	height: 100%;
 	margin-top: 2px;
 }
 h2{
@@ -98,4 +98,8 @@ h5 {
 .material-scrolltop:hover {
     background-color: inherit;
     z-index: 9999;
+}
+
+.uninstall .header {
+	text-shadow: 0.8px 0px 0.5px #000 !important;
 }

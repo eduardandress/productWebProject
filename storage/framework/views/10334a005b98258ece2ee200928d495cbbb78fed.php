@@ -25,10 +25,18 @@
     <script>
         var Resourses = (function(){
             var addLogoDefaultImg = "<?php echo e(URL::asset('installer/img/addLogo.png')); ?>";
-            var imgDefaultBack = "<?php echo e(URL::asset('installer/img/imgDefaultBack.png')); ?>"; 
+            var imgDefaultBack = "<?php echo e(URL::asset('installer/img/imgDefaultBack.png')); ?>";
+            var setLoadingScreen = function () {
+               $('.box').append('<div class="overlay"><i class="fa fa-refresh fa-spin white-text"></i> <p class="white-text"><?php echo e(trans('messages.loading')); ?></p></div>');
+            };
+            var hideLoadingScreen = function () {
+               $('.box').find('.overlay').remove();
+            } 
             return {
                 addLogoDefaultImg: addLogoDefaultImg,
-                imgDefaultBack: imgDefaultBack
+                imgDefaultBack: imgDefaultBack,
+                setLoadingScreen: setLoadingScreen,
+                hideLoadingScreen: hideLoadingScreen
             }
 
         }())
@@ -85,7 +93,7 @@
                       <div class="col s12">
                          <div class="input-field">
 
-                            <input placeholder="max 100 caracteres"  type="text" value="" class="validate name" id="name">
+                            <input  type="text" value="" class="validate name" id="name">
                             <label for="name" ><?php echo e(trans('messages.product.productName')); ?></label>
 
                         </div>
@@ -95,8 +103,7 @@
                       <div class="col s12">
                         <div class="input-field">
                           <textarea id="description"
-                             class="materialize-textarea description">
-                          </textarea>
+                             class="materialize-textarea description" maxlength="500"></textarea>
                                  <label for="description" ><?php echo e(trans('messages.product.productDescription')); ?></label>
                         </div>
                       </div>
@@ -158,7 +165,7 @@
 
 
   <script type="text/babel">
-   
+      let resources = Resourses;
       let Steps = [
 
       {
@@ -194,13 +201,12 @@
                <?php if(session('message')): ?>
                   <p class="alert"><?php echo e(session('message')); ?></p>
                   <?php endif; ?>
+                   <p ><?php echo e(trans('messages.environment.description')); ?></p>
                   <form method="post" action="<?php echo e(route('EJCInstaller::environmentSave')); ?>">
-                      <textarea class="textarea" name="envConfig"><?php echo e($envConfig); ?></textarea>
+                      <textarea class="textarea" id="envConfig" name="envConfig"><?php echo e($envConfig); ?></textarea>
                       <?php echo csrf_field(); ?>
 
-                      <div class="buttons buttons--right">
-                           <button class="button button--light" type="submit"><?php echo e(trans('messages.environment.save')); ?></button>
-                      </div>
+                      <br>
                   </form>
                   <?php if(!isset($environment['errors'])): ?>
                   <div class="buttons">
@@ -214,8 +220,24 @@
         },
         beforeNextStep(container){
             return  new Promise(function(resolve, reject){
-
-              resolve();
+                var newConf = $('#envConfig').val();
+                $.ajax({
+                    url:'install/environment/save',
+                    method:'POST',
+                    beforeSend : function(){
+                     resources.setLoadingScreen();
+                    },
+                    data : {'envConfig': newConf},
+                    success : function(response){
+                        if(response.status && response.status === 'success'){
+                          resources.hideLoadingScreen();
+                          resolve();
+                        } else {
+                          console.log(response.message);
+                          reject();
+                        }
+                    }
+                })
                
            }); 
         }
@@ -248,13 +270,18 @@
             `,
         },
         beforeNextStep(container){
-           return  new Promise(function(resolve, reject){
 
+           return  new Promise(function(resolve, reject){
+                  
                 $.ajax({
                     url:'install/database',
                     method:'GET',
+                    beforeSend : function(){
+                     resources.setLoadingScreen();
+                    },
                     success : function(response){
                         if(response.status && response.status === 'success'){
+                          resources.hideLoadingScreen();
                           resolve();
                         } else {
                           console.log(response.message);
@@ -350,6 +377,14 @@
                           </div>
                       </div>
                               <br />
+                      <div class="input-field "> 
+                          <div class="form-group">
+                              <div class="input-field">
+                                  <textarea id="mainAddress" class="materialize-textarea" name="mainAddress" style="max-height: 200px; resize: none"></textarea>
+                                  <label for="mainAddress"><?php echo e(trans('messages.company.mainAddress')); ?></label>
+                              </div>
+                          </div>
+                      </div>
 
                       <div class="row">
                           <div class="input-field col m6 s12"> 
@@ -427,8 +462,12 @@
                         data: formData,
                         processData : false,
                         contentType : false,  
+                        beforeSend : function(){
+                         resources.setLoadingScreen();
+                        },
                         success : function(response){
                             if(response.status && response.status === 'success'){
+                              resources.hideLoadingScreen();
                               resolve();
                             } else {
                               console.log(response.message);
@@ -489,8 +528,12 @@
                         data: products,
                         processData: false,
                         contentType : false,  
+                        beforeSend : function(){
+                         resources.setLoadingScreen();
+                        },
                         success : function(response){
                             if(response.status && response.status === 'success'){
+                            resources.hideLoadingScreen();
                               resolve();
                             } else {
                               console.log(response.message);
@@ -538,9 +581,13 @@
                         method:'POST',
                         data: clients,
                         processData: false,
-                        contentType : false,  
+                        contentType : false,
+                        beforeSend: function(){
+                          resources.setLoadingScreen();
+                        },
                         success : function(response){
                             if(response.status && response.status === 'success'){
+                              resources.hideLoadingScreen();
                               resolve();
                             } else {
                               console.log(response.message);
@@ -553,7 +600,8 @@
         },
         afterRender(container) {
             let trans = {
-              clientPlaceHolder: "<?php echo e(trans('messages.client.clientName')); ?>"
+              clientPlaceHolder: "<?php echo e(trans('messages.client.clientName')); ?>",
+              clientImgTitle:"<?php echo e(trans('messages.client.clientImgTitle')); ?>"
             }
             this.props.options["cAdmin"] =   new ClientsAdmin( [], $("#clientsContainer"), trans);
             this.props.options.cAdmin.render();
@@ -591,9 +639,13 @@
                         url:'install/final',
                         method:'GET',
                         processData: false,
-                        contentType : false,  
+                        contentType : false,
+                        beforeSend: function(){
+                          resources.setLoadingScreen();
+                        },
                         success : function(response){
                             if(response.status && response.status === 'success'){
+                              resources.hideLoadingScreen();
                               resolve();
                             } else {
                               console.log(response.message);

@@ -34,8 +34,8 @@ class EnvironmentController extends Controller
     {
         $message = $this->EnvironmentManager->saveFile($input);
 
-        return $redirect->route('EJCInstaller::environment')
-                        ->with(['message' => $message]);
+            return response()->json(\AppHelper::response($message, 'success'
+        ));
     }
 
 }

@@ -44,7 +44,7 @@ class clientController extends Controller
     $clients =  $clients !== null ?  $clients : array();
     //Cleaning the client Img Folder
     $clientImgPath = public_path().'/'."assets/images/clients/";
-    File::cleanDirectory($Cleaning);
+    File::cleanDirectory($clientImgPath);
 
 
   	\DB::beginTransaction();

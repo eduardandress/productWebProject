@@ -49,7 +49,7 @@
               <div class="card ">
                 <div class="card-image">
                   <img src="<?php echo e(URL::asset($product->mainPictureURL)); ?>">
-                  <span class="card-title <?php echo e(isset($demoColors['thirdFontColorClass']) ? $demoColors['thirdFontColorClass'] : ''); ?>"><?php echo e($product->name); ?></span>
+                  <span style="word-break: break-word" class="card-title <?php echo e(isset($demoColors['thirdFontColorClass']) ? $demoColors['thirdFontColorClass'] : ''); ?>"><?php echo e($product->name); ?></span>
                 </div>
              <!--    <div class="card-content">
            </div> -->

@@ -35,6 +35,21 @@ class DatabaseManager
                 return $this->response($e->getMessage());
             }
     }
+
+    public function truncateAllTables() {
+
+        try{
+            
+            $tableNames = \DB::select('SHOW TABLES');
+            foreach ($tableNames as $key => $name) {
+                \DB::table($name->Tables_in_forge)->truncate();
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('CoreRoutes::landing_page');
+        }
+
+        return $this->response('database truncated!', 'success');
+    }
     /**
      * Run the migration and call the seeder.
      *
@@ -66,7 +81,7 @@ class DatabaseManager
         try{
             Artisan::call('db:seed');
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             return $this->response($e->getMessage());
         }
 
